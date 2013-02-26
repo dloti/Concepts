@@ -13,7 +13,7 @@ ConceptNode::ConceptNode() {
 	this->goal = false;
 	this->predicate = "";
 }
-;
+
 
 ConceptNode::ConceptNode(std::string predicate) {
 	left = NULL;
@@ -21,7 +21,7 @@ ConceptNode::ConceptNode(std::string predicate) {
 	this->goal = false;
 	this->predicate = predicate;
 }
-;
+
 
 bool ConceptNode::IsGoal() {
 	return goal;

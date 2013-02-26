@@ -10,8 +10,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "Operand.hxx"
 
-class ConceptNode {
+class ConceptNode : public Operand {
 private:
 	bool goal;
 	bool simple;

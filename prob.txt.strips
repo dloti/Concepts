@@ -1,0 +1,696 @@
+Primitive concepts:
+		Predicate:
+			HOLDING
+		Type:
+			OBJECT
+		Predicate:
+			CLEAR
+		Type:
+			OBJECT
+		Predicate:
+			ON-TABLE
+		Type:
+			OBJECT
+		Predicate:
+			ARM-EMPTY
+		Type:
+			NO-TYPE
+Types:
+	ARTFICIAL-ALL-OBJECTS
+		Objects with this type
+			A
+			C
+			B
+	OBJECT
+		Fluents with this type
+			(HOLDING A)
+			(ON A C)
+			(ON A A)
+			(HOLDING C)
+			(CLEAR B)
+			(HOLDING B)
+			(ON-TABLE C)
+			(ON B B)
+			(ON B C)
+			(ON B A)
+			(ON C C)
+			(ON C A)
+			(ON A B)
+			(CLEAR C)
+			(CLEAR A)
+			(ON-TABLE B)
+			(ON C B)
+			(ON-TABLE A)
+		Objects with this type
+			A
+			C
+			B
+	NO-TYPE
+		Fluents with this type
+			(ARM-EMPTY)
+		Objects with this type
+			NO-OBJECT
+Binary predicates:
+		Predicate:
+			ON
+		Types:
+			OBJECT
+			OBJECT
+Objects:
+	A
+		types:
+			ARTFICIAL-ALL-OBJECTS
+			OBJECT
+		Fluents with this object
+			(HOLDING A)
+			(ON A C)
+			(ON A A)
+			(ON B A)
+			(ON C A)
+			(ON A B)
+			(CLEAR A)
+			(ON-TABLE A)
+	C
+		types:
+			ARTFICIAL-ALL-OBJECTS
+			OBJECT
+		Fluents with this object
+			(ON A C)
+			(HOLDING C)
+			(ON-TABLE C)
+			(ON B C)
+			(ON C C)
+			(ON C A)
+			(CLEAR C)
+			(ON C B)
+	B
+		types:
+			ARTFICIAL-ALL-OBJECTS
+			OBJECT
+		Fluents with this object
+			(CLEAR B)
+			(HOLDING B)
+			(ON B B)
+			(ON B C)
+			(ON B A)
+			(ON A B)
+			(ON-TABLE B)
+			(ON C B)
+	NO-OBJECT
+		types:
+			NO-TYPE
+		Fluents with this object
+			(ARM-EMPTY)
+Fluents:
+
+	(HOLDING A)
+		Predicate:
+			HOLDING
+		Objects - Types:
+			A - OBJECT
+	(ON A C)
+		Predicate:
+			ON
+		Objects - Types:
+			A - OBJECT
+			C - OBJECT
+	(ON A A)
+		Predicate:
+			ON
+		Objects - Types:
+			A - OBJECT
+			A - OBJECT
+	(HOLDING C)
+		Predicate:
+			HOLDING
+		Objects - Types:
+			C - OBJECT
+	(CLEAR B)
+		Predicate:
+			CLEAR
+		Objects - Types:
+			B - OBJECT
+	(HOLDING B)
+		Predicate:
+			HOLDING
+		Objects - Types:
+			B - OBJECT
+	(ON-TABLE C)
+		Predicate:
+			ON-TABLE
+		Objects - Types:
+			C - OBJECT
+	(ON B B)
+		Predicate:
+			ON
+		Objects - Types:
+			B - OBJECT
+			B - OBJECT
+	(ON B C)
+		Predicate:
+			ON
+		Objects - Types:
+			B - OBJECT
+			C - OBJECT
+	(ON B A)
+		Predicate:
+			ON
+		Objects - Types:
+			B - OBJECT
+			A - OBJECT
+	(ON C C)
+		Predicate:
+			ON
+		Objects - Types:
+			C - OBJECT
+			C - OBJECT
+	(ON C A)
+		Predicate:
+			ON
+		Objects - Types:
+			C - OBJECT
+			A - OBJECT
+	(ON A B)
+		Predicate:
+			ON
+		Objects - Types:
+			A - OBJECT
+			B - OBJECT
+	(CLEAR C)
+		Predicate:
+			CLEAR
+		Objects - Types:
+			C - OBJECT
+	(ARM-EMPTY)
+		Predicate:
+			ARM-EMPTY
+		Objects - Types:
+			NO-OBJECT - NO-TYPE
+	(CLEAR A)
+		Predicate:
+			CLEAR
+		Objects - Types:
+			A - OBJECT
+	(ON-TABLE B)
+		Predicate:
+			ON-TABLE
+		Objects - Types:
+			B - OBJECT
+	(ON C B)
+		Predicate:
+			ON
+		Objects - Types:
+			C - OBJECT
+			B - OBJECT
+	(ON-TABLE A)
+		Predicate:
+			ON-TABLE
+		Objects - Types:
+			A - OBJECT
+PDDL Operators:
+
+(UNSTACK ?OB - OBJECT ?UNDEROB - OBJECT ):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		?OB - OBJECT
+		?UNDEROB - OBJECT
+	 grounded actions:
+		(UNSTACK A B)
+		(UNSTACK C A)
+		(UNSTACK C C)
+		(UNSTACK B A)
+		(UNSTACK B C)
+		(UNSTACK B B)
+		(UNSTACK A A)
+		(UNSTACK A C)
+		(UNSTACK C B)
+(STACK ?OB - OBJECT ?UNDEROB - OBJECT ):
+	Base Name:
+		STACK
+	Objects - Types:
+		?OB - OBJECT
+		?UNDEROB - OBJECT
+	 grounded actions:
+		(STACK A B)
+		(STACK C A)
+		(STACK C C)
+		(STACK C B)
+		(STACK B A)
+		(STACK B C)
+		(STACK B B)
+		(STACK A A)
+		(STACK A C)
+(PUTDOWN ?OB - OBJECT ):
+	Base Name:
+		PUTDOWN
+	Objects - Types:
+		?OB - OBJECT
+	 grounded actions:
+		(PUTDOWN C)
+		(PUTDOWN B)
+		(PUTDOWN A)
+(PICKUP ?OB - OBJECT ):
+	Base Name:
+		PICKUP
+	Objects - Types:
+		?OB - OBJECT
+	 grounded actions:
+		(PICKUP C)
+		(PICKUP B)
+		(PICKUP A)
+Actions:
+
+(END):
+	Base Name:
+		
+	Objects - Types:
+	Preconditions:
+		(ON B C)
+		(ON A B)
+	Adds:
+	Deletes:
+
+
+(PICKUP C):
+	Base Name:
+		PICKUP
+	Objects - Types:
+		C - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(ON-TABLE C)
+		(CLEAR C)
+	Adds:
+		(HOLDING C)
+	Deletes:
+		(CLEAR C)
+		(ON-TABLE C)
+		(ARM-EMPTY)
+
+
+(UNSTACK A B):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		A - OBJECT
+		B - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR A)
+		(ON A B)
+	Adds:
+		(HOLDING A)
+		(CLEAR B)
+	Deletes:
+		(ON A B)
+		(CLEAR A)
+		(ARM-EMPTY)
+
+
+(UNSTACK C A):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		C - OBJECT
+		A - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR C)
+		(ON C A)
+	Adds:
+		(HOLDING C)
+		(CLEAR A)
+	Deletes:
+		(ON C A)
+		(CLEAR C)
+		(ARM-EMPTY)
+
+
+(UNSTACK C C):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		C - OBJECT
+		C - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR C)
+		(ON C C)
+	Adds:
+		(HOLDING C)
+	Deletes:
+		(ON C C)
+		(ARM-EMPTY)
+
+
+(UNSTACK B A):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		B - OBJECT
+		A - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR B)
+		(ON B A)
+	Adds:
+		(HOLDING B)
+		(CLEAR A)
+	Deletes:
+		(ON B A)
+		(CLEAR B)
+		(ARM-EMPTY)
+
+
+(UNSTACK B C):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		B - OBJECT
+		C - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR B)
+		(ON B C)
+	Adds:
+		(HOLDING B)
+		(CLEAR C)
+	Deletes:
+		(ON B C)
+		(CLEAR B)
+		(ARM-EMPTY)
+
+
+(UNSTACK B B):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		B - OBJECT
+		B - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR B)
+		(ON B B)
+	Adds:
+		(HOLDING B)
+	Deletes:
+		(ON B B)
+		(ARM-EMPTY)
+
+
+(STACK A B):
+	Base Name:
+		STACK
+	Objects - Types:
+		A - OBJECT
+		B - OBJECT
+	Preconditions:
+		(HOLDING A)
+		(CLEAR B)
+	Adds:
+		(ARM-EMPTY)
+		(CLEAR A)
+		(ON A B)
+	Deletes:
+		(CLEAR B)
+		(HOLDING A)
+
+
+(STACK C A):
+	Base Name:
+		STACK
+	Objects - Types:
+		C - OBJECT
+		A - OBJECT
+	Preconditions:
+		(HOLDING C)
+		(CLEAR A)
+	Adds:
+		(ARM-EMPTY)
+		(CLEAR C)
+		(ON C A)
+	Deletes:
+		(CLEAR A)
+		(HOLDING C)
+
+
+(STACK C C):
+	Base Name:
+		STACK
+	Objects - Types:
+		C - OBJECT
+		C - OBJECT
+	Preconditions:
+		(HOLDING C)
+		(CLEAR C)
+	Adds:
+		(ARM-EMPTY)
+		(ON C C)
+	Deletes:
+		(HOLDING C)
+
+
+(STACK C B):
+	Base Name:
+		STACK
+	Objects - Types:
+		C - OBJECT
+		B - OBJECT
+	Preconditions:
+		(HOLDING C)
+		(CLEAR B)
+	Adds:
+		(ARM-EMPTY)
+		(CLEAR C)
+		(ON C B)
+	Deletes:
+		(CLEAR B)
+		(HOLDING C)
+
+
+(STACK B A):
+	Base Name:
+		STACK
+	Objects - Types:
+		B - OBJECT
+		A - OBJECT
+	Preconditions:
+		(HOLDING B)
+		(CLEAR A)
+	Adds:
+		(ARM-EMPTY)
+		(CLEAR B)
+		(ON B A)
+	Deletes:
+		(CLEAR A)
+		(HOLDING B)
+
+
+(STACK B C):
+	Base Name:
+		STACK
+	Objects - Types:
+		B - OBJECT
+		C - OBJECT
+	Preconditions:
+		(HOLDING B)
+		(CLEAR C)
+	Adds:
+		(ARM-EMPTY)
+		(CLEAR B)
+		(ON B C)
+	Deletes:
+		(CLEAR C)
+		(HOLDING B)
+
+
+(STACK B B):
+	Base Name:
+		STACK
+	Objects - Types:
+		B - OBJECT
+		B - OBJECT
+	Preconditions:
+		(HOLDING B)
+		(CLEAR B)
+	Adds:
+		(ARM-EMPTY)
+		(ON B B)
+	Deletes:
+		(HOLDING B)
+
+
+(PUTDOWN C):
+	Base Name:
+		PUTDOWN
+	Objects - Types:
+		C - OBJECT
+	Preconditions:
+		(HOLDING C)
+	Adds:
+		(CLEAR C)
+		(ARM-EMPTY)
+		(ON-TABLE C)
+	Deletes:
+		(HOLDING C)
+
+
+(PUTDOWN B):
+	Base Name:
+		PUTDOWN
+	Objects - Types:
+		B - OBJECT
+	Preconditions:
+		(HOLDING B)
+	Adds:
+		(CLEAR B)
+		(ARM-EMPTY)
+		(ON-TABLE B)
+	Deletes:
+		(HOLDING B)
+
+
+(PICKUP B):
+	Base Name:
+		PICKUP
+	Objects - Types:
+		B - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(ON-TABLE B)
+		(CLEAR B)
+	Adds:
+		(HOLDING B)
+	Deletes:
+		(CLEAR B)
+		(ON-TABLE B)
+		(ARM-EMPTY)
+
+
+(UNSTACK A A):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		A - OBJECT
+		A - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR A)
+		(ON A A)
+	Adds:
+		(HOLDING A)
+	Deletes:
+		(ON A A)
+		(ARM-EMPTY)
+
+
+(UNSTACK A C):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		A - OBJECT
+		C - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR A)
+		(ON A C)
+	Adds:
+		(HOLDING A)
+		(CLEAR C)
+	Deletes:
+		(ON A C)
+		(CLEAR A)
+		(ARM-EMPTY)
+
+
+(UNSTACK C B):
+	Base Name:
+		UNSTACK
+	Objects - Types:
+		C - OBJECT
+		B - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(CLEAR C)
+		(ON C B)
+	Adds:
+		(HOLDING C)
+		(CLEAR B)
+	Deletes:
+		(ON C B)
+		(CLEAR C)
+		(ARM-EMPTY)
+
+
+(STACK A A):
+	Base Name:
+		STACK
+	Objects - Types:
+		A - OBJECT
+		A - OBJECT
+	Preconditions:
+		(HOLDING A)
+		(CLEAR A)
+	Adds:
+		(ARM-EMPTY)
+		(ON A A)
+	Deletes:
+		(HOLDING A)
+
+
+(STACK A C):
+	Base Name:
+		STACK
+	Objects - Types:
+		A - OBJECT
+		C - OBJECT
+	Preconditions:
+		(HOLDING A)
+		(CLEAR C)
+	Adds:
+		(ARM-EMPTY)
+		(CLEAR A)
+		(ON A C)
+	Deletes:
+		(CLEAR C)
+		(HOLDING A)
+
+
+(PUTDOWN A):
+	Base Name:
+		PUTDOWN
+	Objects - Types:
+		A - OBJECT
+	Preconditions:
+		(HOLDING A)
+	Adds:
+		(CLEAR A)
+		(ARM-EMPTY)
+		(ON-TABLE A)
+	Deletes:
+		(HOLDING A)
+
+
+(PICKUP A):
+	Base Name:
+		PICKUP
+	Objects - Types:
+		A - OBJECT
+	Preconditions:
+		(ARM-EMPTY)
+		(ON-TABLE A)
+		(CLEAR A)
+	Adds:
+		(HOLDING A)
+	Deletes:
+		(CLEAR A)
+		(ON-TABLE A)
+		(ARM-EMPTY)
+
+
+Initial State:
+	(ARM-EMPTY) (ON C B) (ON-TABLE B) (ON-TABLE A) (CLEAR C) (CLEAR A)
+
+Goal:
+	(ON B C) (ON A B)
