@@ -31,41 +31,39 @@ void ConceptNode::IsGoal(bool goal) {
 	this->goal = goal;
 }
 
-bool ConceptNode::IsSimple() {
-	return simple;
-}
+//bool ConceptNode::IsSimple() {
+//	return simple;
+//}
+//
+//void ConceptNode::IsSimple(bool simple) {
+//	this->simple = simple;
+//}
 
-void ConceptNode::IsSimple(bool simple) {
-	this->simple = simple;
-}
-
-bool ConceptNode::SimpleValue(){
-	return this->simpleValue;
-}
-
-void ConceptNode::SimpleValue(bool simpleValue) {
-	this->simpleValue = simpleValue;
-}
+//bool ConceptNode::SimpleValue(){
+//	return this->simpleValue;
+//}
+//
+//void ConceptNode::SimpleValue(bool simpleValue) {
+//	this->simpleValue = simpleValue;
+//}
 
 ConceptNode::~ConceptNode() {
-	//delete this->left;
-	//delete this->right;
 }
 
-void ConceptNode::SetLeft(ConceptNode* left) {
-	this->left = left;
-}
-
-void ConceptNode::SetRight(ConceptNode* right) {
-	this->right = right;
-}
-
-ConceptNode* ConceptNode::GetLeft() {
-	return this->left;
-}
-ConceptNode* ConceptNode::GetRight() {
-	return this->right;
-}
+//void ConceptNode::SetLeft(ConceptNode* left) {
+//	this->left = left;
+//}
+//
+//void ConceptNode::SetRight(ConceptNode* right) {
+//	this->right = right;
+//}
+//
+//ConceptNode* ConceptNode::GetLeft() {
+//	return this->left;
+//}
+//ConceptNode* ConceptNode::GetRight() {
+//	return this->right;
+//}
 
 void ConceptNode::UpdateInterpretation() {
 	if (this->left != NULL && this->right != NULL) {
@@ -86,7 +84,7 @@ void ConceptNode::UpdateInterpretation() {
 		this->ClearInterpretation();
 		std::set_intersection(first1, last1, first2, last2,
 				std::back_inserter(this->interpretation));
-	}
+}
 }
 
 void ConceptNode::ClearInterpretation() {
@@ -99,7 +97,7 @@ std::vector<int>* ConceptNode::GetInterpretation() {
 
 void ConceptNode::PrintConcept() {
 
-	if(this->simple){ (!this->simpleValue)?std::cout<<"!":std::cout<<"";std::cout<<this->predicate; return;}
+	//if(this->simple){ (!this->simpleValue)?std::cout<<"!":std::cout<<"";std::cout<<this->predicate; return;}
 	if ((this->left) == NULL && (this->right) == NULL) {
 		std::cout << this->GetPredicate();
 	} else {

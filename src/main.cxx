@@ -19,7 +19,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+#include "CompoundConcept.hxx"
 #include "ConceptNode.hxx"
+#include "BinaryOperator.hxx"
+#include "Join.hxx"
 
 using namespace aig_tk;
 using namespace std;
@@ -27,7 +30,7 @@ using namespace std;
 map<string, vector<int> > relations;
 map<string, ConceptNode> primitiveConcepts;
 map<string, ConceptNode> goalConcepts;
-vector<ConceptNode> rootConcepts;
+vector<CompoundConcept*> rootConcepts;
 void encode_as_text(aig_tk::STRIPS_Problem& prob, std::string destination) {
 	std::ofstream out_stream(destination.c_str());
 
@@ -284,7 +287,7 @@ void combine_concepts() {
 
 	for (pos = pos1 = primitiveConcepts.begin(); pos != primitiveConcepts.end();
 			++pos) {
-		ConceptNode* c = new ConceptNode("");
+		BinaryOperator* c = new Join();
 		(*c).SetLeft(&(pos->second));
 		for (int i = rnd; i > 0; i--) {
 			if (pos1 == primitiveConcepts.end()) {
@@ -293,7 +296,7 @@ void combine_concepts() {
 			}
 		}
 		(*c).SetRight(&((pos1)->second));
-		rootConcepts.push_back(*c);
+		rootConcepts.push_back(c);
 	}
 }
 
@@ -325,8 +328,6 @@ void get_primitive_concepts_relations(STRIPS_Problem& prob) {
 				&& prob.types()[types_idxs[0]]->name() == "NO-TYPE") {
 			//delete c;
 			continue;
-			//c->IsSimple(true);
-			//c->SimpleValue(true);
 		}
 
 		primitiveConcepts[prob.fluents()[k]->predicate()] = *c;
@@ -357,28 +358,24 @@ void print_interpretations(STRIPS_Problem& prob) {
 	map<string, ConceptNode>::iterator pos;
 	for (pos = primitiveConcepts.begin(); pos != primitiveConcepts.end();
 			++pos) {
-		cout << endl << "Concept: " << pos->first << " Objs: "
-				<< pos->second.IsSimple() << endl;
-		if (!pos->second.IsSimple()) {
+		cout << endl << "Concept: " << pos->first << " Objs: " << endl;
 			for (int i = 0; i < pos->second.GetInterpretation()->size(); i++) {
 				cout
 						<< prob.objects()[(*pos->second.GetInterpretation())[i]]->signature()
 						<< endl;
 			}
-		}
+
 	}
 
 	//Complex concept interpretations
-	vector<ConceptNode>::iterator it;
+	vector<CompoundConcept* >::iterator it;
 	cout << "++++++++++++++++++++++++++++++++++" << endl;
 	for (it = rootConcepts.begin(); it != rootConcepts.end(); ++it) {
 		cout << endl << "CConcept: ";
-		it->PrintConcept();
-		if (it->IsSimple())
-			cout << " Simple" << endl;
+		(*it)->infix(cout);
 		cout << " CObjs: " << endl;
-		for (int i = 0; i < it->GetInterpretation()->size(); i++) {
-			cout << prob.objects()[(*it->GetInterpretation())[i]]->signature()
+		for (int i = 0; i < (*it)->GetInterpretation()->size(); i++) {
+			cout << prob.objects()[(*(*it)->GetInterpretation())[i]]->signature()
 					<< endl;
 		}
 	}
@@ -394,9 +391,9 @@ void clear_interpretations() {
 }
 
 void update_interpretations() {
-	vector<ConceptNode>::iterator pos;
+	vector<CompoundConcept* >::iterator pos;
 	for (pos = rootConcepts.begin(); pos != rootConcepts.end(); ++pos) {
-		pos->UpdateInterpretation();
+		(*pos)->UpdateInterpretation();
 	}
 }
 
@@ -418,12 +415,7 @@ void get_interpretations(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
 			if (arity > 1)
 				continue;
 
-			//TODO
 			if ((prob.types()[types_idxs[0]]->name().compare("NO-TYPE"))==0) {
-			//				if (!primitiveConcepts[current_predicate].SimpleValue()) {
-			//					primitiveConcepts[current_predicate].IsSimple(true);
-			//					primitiveConcepts[current_predicate].SimpleValue(true);
-			//				}
 							continue;
 						}
 

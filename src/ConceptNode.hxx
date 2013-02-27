@@ -7,17 +7,11 @@
 
 #ifndef CONCEPTNODE_HXX_
 #define CONCEPTNODE_HXX_
-#include <string>
-#include <vector>
-#include <iostream>
+
 #include "Operand.hxx"
 
 class ConceptNode : public Operand {
 private:
-	bool goal;
-	bool simple;
-	bool simpleValue;
-	std::string predicate;
 	std::vector<int> interpretation;
 	ConceptNode* left;
 	ConceptNode* right;
@@ -27,14 +21,14 @@ public:
 	ConceptNode(std::string predicate);
 	bool IsGoal();
 	void IsGoal(bool goal);
-	bool IsSimple();
-	void IsSimple(bool simple);
-	bool SimpleValue();
-	void SimpleValue(bool simpleValue);
-	void SetLeft(ConceptNode* left);
-	void SetRight(ConceptNode* right);
-	ConceptNode* GetLeft();
-	ConceptNode* GetRight();
+	//bool IsSimple();
+	//void IsSimple(bool simple);
+	//bool SimpleValue();
+	//void SimpleValue(bool simpleValue);
+//	void SetLeft(ConceptNode* left);
+//	void SetRight(ConceptNode* right);
+//	ConceptNode* GetLeft();
+//	ConceptNode* GetRight();
 
 	virtual ~ConceptNode();
 	inline std::string GetPredicate() {return predicate;};
@@ -42,7 +36,7 @@ public:
 	void UpdateInterpretation();
 	void ClearInterpretation();
 	std::vector<int>* GetInterpretation();
-//	friend std::ostream& operator<< (std::ostream &out, ConceptNode &cNode);
+	//friend std::ostream& operator<< (std::ostream &out, ConceptNode &cNode);
 	void PrintConcept();
 };
 
