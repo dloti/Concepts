@@ -13,6 +13,6 @@ CompoundConcept::CompoundConcept() {
 }
 
 CompoundConcept::~CompoundConcept() {
-	// TODO Auto-generated destructor stub
 }
 
+std::vector<int>* CompoundConcept::GetInterpretation(){return NULL;}

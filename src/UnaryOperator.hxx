@@ -10,10 +10,14 @@
 #include "Operator.hxx"
 class UnaryOperator : public Operator {
 protected:
-	CompoundConcept* child;
+	Expression* child;
 public:
-	UnaryOperator();
+	UnaryOperator(Expression *child,char op);
 	virtual ~UnaryOperator();
+	void print(std::ostream& s) const {s<<op;}
+	void infix(std::ostream& s) const { s<<"(";print(s);child->infix(s);s<<")"; }
+	void UpdateInterpretation();
+	std::vector<Expression*> GetChildren();
 };
 
 #endif /* UNARYOPERATOR_HXX_ */

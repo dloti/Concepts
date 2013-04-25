@@ -10,7 +10,9 @@
 #include "BinaryOperator.hxx"
 class Join : public BinaryOperator {
 public:
-	Join();
+	Join(Expression* left, Expression* right);
+	std::vector<int>* GetInterpretation();
+	void UpdateInterpretation();
 	virtual ~Join();
 };
 

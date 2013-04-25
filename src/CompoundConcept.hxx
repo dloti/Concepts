@@ -17,8 +17,9 @@ public:
 	virtual void print(std::ostream& s) const = 0;
 	virtual void infix(std::ostream& s) const = 0;
 	virtual void UpdateInterpretation() = 0;
-	virtual std::vector<int>* GetInterpretation() = 0;
-	virtual ~CompoundConcept();
+	virtual void ClearInterpretation() = 0;
+	virtual std::vector<int>* GetInterpretation();
+    virtual ~CompoundConcept();
 };
 
 #endif /* COMPOUNDCONCEPT_HXX_ */

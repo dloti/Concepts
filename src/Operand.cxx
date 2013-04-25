@@ -16,3 +16,10 @@ Operand::~Operand() {
 	// TODO Auto-generated destructor stub
 }
 
+bool Operand::IsGoal() {
+	return goal;
+}
+
+void Operand::IsGoal(bool goal) {
+	this->goal = goal;
+}
