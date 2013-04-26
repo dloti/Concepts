@@ -512,7 +512,7 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
 		}
 		cout << endl << "----------- Primitive concepts and roles interpretation ---------------" << endl;
 		print_interpretations(prob);
-		cout << "Combining concepts..." << endl;
+		cout << "Combining concepts.." << endl;
 		combine_concepts();
 
 		//Adding rules
@@ -520,35 +520,34 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
 		aig_tk::Index_Vec objs_idx = a->pddl_objs_idx();
 		sort(objs_idx.begin(), objs_idx.end());
 
-		for (unsigned i = 0; i < 10; i++) {
-			Rule* r = new Rule(a);
-			unsigned j = r->GetConcepts().size();
-			for (unsigned g = 0; g < rootConcepts.size(); g++) {
-				if (j == objs_idx.size())
-					break;
-				vector<int>* interp = rootConcepts[g]->GetInterpretation();
-				if (interp->size() == 0)
-					continue;
-				sort(interp->begin(), interp->end());
-				if ((int) (*interp)[0] == (int) objs_idx[j]) {
-					j++;
-					if (!r->AddConcept(rootConcepts[g]))
-						cout << "Greska";
-				}
+		//TODO loop here
+		Rule* r = new Rule(a);
+		unsigned j = r->GetConcepts().size();
+		for (unsigned g = 0; g < rootConcepts.size(); g++) {
+			if (j == objs_idx.size())
+				break;
+			vector<int>* interp = rootConcepts[g]->GetInterpretation();
+			if (interp->size() == 0)
+				continue;
+			sort(interp->begin(), interp->end());
+			if ((int) (*interp)[0] == (int) objs_idx[j]) {
+				j++;
+				if (!r->AddConcept(rootConcepts[g]))
+					cout << "Greska";
 			}
-
-			if (r->GetConcepts().size() == objs_idx.size()) {
-				bool found = false;
-				for (unsigned i = 0; i < ruleSet.size(); i++)
-					if (ruleSet[i] == *r) {
-						found = true;
-						break;
-					}
-				if (!found)
-					ruleSet.push_back(*r);
-			} else
-				delete r;
 		}
+
+		if (r->GetConcepts().size() == objs_idx.size()) {
+			bool found = false;
+			for (unsigned i = 0; i < ruleSet.size(); i++)
+				if (ruleSet[i] == *r) {
+					found = true;
+					break;
+				}
+			if (!found)
+				ruleSet.push_back(*r);
+		} else
+			delete r;
 
 		//Rule coverage
 		for (unsigned i = 0; i < ruleSet.size(); i++) {
@@ -557,13 +556,12 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
 			bool ruleCorrect = false;
 			for (unsigned j = 0; j < ruleConcepts.size(); j++) {
 				vector<int>* interp = ruleConcepts[j]->GetInterpretation();
+				conceptCover = false;
+				ruleCorrect = false;
 				if (interp->size() > 0) {
 					conceptCover = true;
-
 					if ((int) (*interp)[0] == (int) objs_idx[j])
 						ruleCorrect = true;
-					else
-						ruleCorrect = false;
 				}
 			}
 			if (conceptCover)
@@ -575,65 +573,12 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
 }
 
 void get_plan(STRIPS_Problem& strips_prob, vector<aig_tk::Node*>& plan) {
-	/**
-	 * HEURISTIC EXAMPLE
-	 */
-	cout << "Get plan";
 	aig_tk::Max_Heuristic estimator;
-
-	/**
-	 * Initializing heuristic with the problem
-	 */
 	estimator.initialize(strips_prob);
-
-	/**
-	 * computing heuristic from the initial state
-	 */
 	estimator.compute(strips_prob.init());
-
-	/**
-	 * Evaluates h_max to a given set of fluents
-	 */
 	aig_tk::Cost_Type goal_cost = estimator.eval(strips_prob.goal());
 
-	std::cout << "Goal Distance is " << goal_cost << std::endl;
-
-	/**
-	 * RELAXED PLAN EXAMPLE
-	 */
-
-	/**
-	 * call generator of initial search node
-	 */
 	aig_tk::Node* n0 = aig_tk::Node::root(strips_prob);
-
-	/**
-	 * Create a propagator that uses h_max
-	 */
-	aig_tk::Propagator<aig_tk::Max_Heuristic> rel_plan(strips_prob);
-
-	/**
-	 * builds relax plan
-	 */
-	rel_plan.build_propagation_graph(n0);
-
-	/**
-	 * Prints Relax Plan
-	 */
-	rel_plan.print();
-
-	/**
-	 * EFFICIENT RELAXED PLAN EXTRACTOR
-	 */
-
-	aig_tk::Relaxed_Plan_Extractor<aig_tk::Max_Heuristic> h_ff;
-
-	h_ff.initialize(strips_prob);
-
-	unsigned cost_rel_plan = h_ff.eval(strips_prob.init(), strips_prob.goal());
-
-	std::cout << std::endl << "Cost of Relaxed Plan: " << cost_rel_plan << std::endl;
-
 	/**
 	 * SEARCH
 	 **/
@@ -643,7 +588,6 @@ void get_plan(STRIPS_Problem& strips_prob, vector<aig_tk::Node*>& plan) {
 	engine.set_heuristic(estimator);
 	engine.set_problem(strips_prob);
 
-//std::vector<aig_tk::Node*> plan;
 //float t0, tf;
 
 //t0 = time_used();
@@ -670,27 +614,6 @@ void get_plan(STRIPS_Problem& strips_prob, vector<aig_tk::Node*>& plan) {
 	cout << "Update primitive interpretations" << endl;
 	interpret_plan(strips_prob, plan);
 }
-
-//void output_plan(std::vector<aig_tk::Node*> plan, float t0, float tf) {
-//	aig_tk::Cost_Type plan_cost = 0;
-//
-//	std::cout << std::endl;
-//	std::cout << "================================================"
-//			<< std::endl;
-//	std::cout << ";; SOLUTION " << std::endl;
-//	std::cout << ";;\t Plan cost: " << std::fixed << plan_cost << ", steps: "
-//			<< plan.size() << std::endl;
-//	std::cout << ";;\t Time: ";
-//	report_interval(t0, tf, std::cout);
-//	std::cout << std::endl << "================================================"
-//			<< std::endl;
-//
-//	for (unsigned k = 0; k < plan.size(); k++) {
-//		aig_tk::Action* a = plan[k]->op();
-//		std::cout << k + 1 << " - " << a->signature() << std::endl;
-//		plan_cost = aig_tk::add(plan_cost, a->cost());
-//	}
-//}
 
 void reset_globals() {
 	/* used to time the different stages of the planner
@@ -997,7 +920,7 @@ int main(int argc, char** argv) {
 	string instance("instance");
 
 	string instance_path;
-	folder = "./" + folder + "/";
+	folder = "./problems/" + folder + "/";
 	domain = folder + domain;
 	vector<vector<aig_tk::Action*>*> plans;
 	std::vector<aig_tk::Node*>* plan;
@@ -1024,7 +947,7 @@ int main(int argc, char** argv) {
 		get_plan(*strips_prob, *plan);
 		vector<aig_tk::Action*>* p = new vector<aig_tk::Action*>();
 		for (unsigned j = 0; j < plan->size(); j++) {
-				p->push_back((*plan)[j]->op());
+			p->push_back((*plan)[j]->op());
 		}
 		plans.push_back(p);
 
