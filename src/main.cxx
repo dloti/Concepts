@@ -68,14 +68,14 @@ void initialize_root_concepts() {
 	}
 }
 
-bool concept_allowed(Expression* candidate, vector<Expression*>* candidates, Expression* childConcept = NULL) {
-	if (candidate->GetInterpretation()->size() == 0)
+bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidates, Expression* childConcept = NULL) {
+	if (operationExpr->GetInterpretation()->size() == 0)
 		return false;
 	if (childConcept != NULL) {
 		if (typeid(*childConcept) == typeid(Not))
 			return false;
 		else if (typeid(*childConcept) == typeid(BinaryOperator)) {
-			if (((BinaryOperator*) candidate)->GetLeft() == ((BinaryOperator*) candidate)->GetRight())
+			if (((BinaryOperator*) operationExpr)->GetLeft() == ((BinaryOperator*) operationExpr)->GetRight())
 				return false;
 		}
 	}
@@ -84,7 +84,7 @@ bool concept_allowed(Expression* candidate, vector<Expression*>* candidates, Exp
 		vector<int>* rootInterp = rootConcepts[i]->GetInterpretation();
 		if (rootInterp->size() == 0)
 			continue;
-		vector<int>* candidateInterp = candidate->GetInterpretation();
+		vector<int>* candidateInterp = operationExpr->GetInterpretation();
 		vector<int> intersect;
 		set_intersection(rootInterp->begin(), rootInterp->end(), candidateInterp->begin(), candidateInterp->end(),
 				back_inserter(intersect));
@@ -96,7 +96,7 @@ bool concept_allowed(Expression* candidate, vector<Expression*>* candidates, Exp
 		vector<int>* cansInterp = (*candidates)[i]->GetInterpretation();
 		if (cansInterp->size() == 0)
 			continue;
-		vector<int>* candidateInterp = candidate->GetInterpretation();
+		vector<int>* candidateInterp = operationExpr->GetInterpretation();
 		vector<int> intersect;
 		set_intersection(cansInterp->begin(), cansInterp->end(), candidateInterp->begin(), candidateInterp->end(),
 				back_inserter(intersect));
@@ -106,11 +106,11 @@ bool concept_allowed(Expression* candidate, vector<Expression*>* candidates, Exp
 	return true;
 }
 
-void insert_compound_concept(Expression* candidate, vector<Expression*>* candidates, Expression* childConcept = NULL) {
-	if (concept_allowed(candidate, candidates, childConcept)) {
-		candidates->push_back(candidate);
+void insert_compound_concept(Expression* operationExpr, vector<Expression*>* candidates, Expression* childConcept = NULL) {
+	if (concept_allowed(operationExpr, candidates, childConcept)) {
+		candidates->push_back(operationExpr);
 	} else {
-		delete candidate;
+		delete operationExpr;
 	}
 }
 
@@ -522,10 +522,8 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
 
 		//TODO loop here
 		Rule* r = new Rule(a);
-		unsigned j = r->GetConcepts().size();
-		for (unsigned g = 0; g < rootConcepts.size(); g++) {
-			if (j == objs_idx.size())
-				break;
+		unsigned j = 0;
+		for (unsigned g = 0; g < rootConcepts.size() && j<1; g++) {
 			vector<int>* interp = rootConcepts[g]->GetInterpretation();
 			if (interp->size() == 0)
 				continue;
