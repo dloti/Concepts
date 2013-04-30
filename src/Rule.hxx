@@ -12,7 +12,8 @@
 #include <planning/Action.hxx>
 class Rule {
 protected:
-	int coverage, correct;
+	double coverage, correct;
+	int examples;
 	std::vector<Expression*> concepts;
 	aig_tk::Action* action;
 public:
@@ -22,10 +23,12 @@ public:
 
 	aig_tk::Action* GetAction();
 	inline int GetMaxConcepts(){ if(action== NULL) return 0; return action->pddl_objs_idx().size();}
-	inline int GetCoverage(){ return coverage;}
-	inline int GetCorrect(){ return correct;}
-	inline void IncCoverage(){ coverage++;}
-	inline void IncCorrect(){ correct++;}
+	inline double GetCoverage(){ return coverage/examples;}
+	inline double GetCorrect(){ return correct/examples;}
+	inline void IncCoverage(){ coverage+=1;}
+	inline void IncCorrect(){ correct+=1;}
+	inline int GetExamples(){ return examples;}
+	inline void IncExamples(){ examples++;}
 	int GetCurrentCoverage();
 	friend std::ostream& operator<< (std::ostream &out, Rule &r);
 	friend bool operator== (Rule &r1, Rule &r2);

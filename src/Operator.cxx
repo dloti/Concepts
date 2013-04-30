@@ -7,7 +7,7 @@
 
 #include "Operator.hxx"
 
-Operator::Operator(char op) {
+Operator::Operator(char op):Expression() {
 	this->op = op;
 }
 

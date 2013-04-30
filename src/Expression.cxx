@@ -8,8 +8,8 @@
 #include "Expression.hxx"
 
 Expression::Expression() {
-	// TODO Auto-generated constructor stub
-
+	this->level = 0;
+	this->isRole = false;
 }
 
 Expression::~Expression() {

@@ -7,9 +7,8 @@
 
 #include "Operand.hxx"
 
-Operand::Operand() {
-	// TODO Auto-generated constructor stub
-
+Operand::Operand():Expression() {
+	this->goal = false;
 }
 
 Operand::~Operand() {

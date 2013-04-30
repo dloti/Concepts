@@ -16,6 +16,7 @@
 
 class Expression {
 protected:
+	int level;
 	bool isRole;
 public:
 	Expression();
@@ -28,6 +29,8 @@ public:
 	virtual std::vector<Expression*> GetChildren() = 0;
 	inline bool IsRole(){return isRole;}
 	inline void SetRole(bool isRole){this->isRole = isRole;}
+	inline bool SetLevel(){return level;}
+	inline void GetLevel(int level){this->level = level;}
     virtual ~Expression();
 };
 

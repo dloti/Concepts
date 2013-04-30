@@ -11,6 +11,7 @@ Rule::Rule(aig_tk::Action* action) {
 	this->action = action;
 	coverage = 0;
 	correct = 0;
+	examples=1;
 }
 
 aig_tk::Action* Rule::GetAction() {
