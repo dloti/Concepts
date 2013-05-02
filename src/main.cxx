@@ -75,6 +75,7 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 	vector<int>* candidateInterp = operationExpr->GetInterpretation();
 	if (candidateInterp->size() == 0)
 		return false;
+	sort(candidateInterp->begin(),candidateInterp->end());
 //	if (childConcept != NULL) {
 //		if (typeid(*childConcept) == typeid(Not))
 //			return false;
@@ -86,6 +87,8 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 	for (unsigned i = 0; i < rootConcepts.size(); i++) {
 		vector<int>* rootInterp = rootConcepts[i]->GetInterpretation();
 		if (rootInterp->size() == 0 || (candidateInterp->size() != rootInterp->size())) continue;
+		sort(rootInterp->begin(),rootInterp->end());
+
 		vector<int> intersect;
 		set_intersection(rootInterp->begin(), rootInterp->end(), candidateInterp->begin(), candidateInterp->end(),
 				back_inserter(intersect));
@@ -105,6 +108,7 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 		vector<int>* cansInterp = (*candidateConcepts)[i]->GetInterpretation();
 		if (cansInterp->size() == 0 || (candidateInterp->size() != cansInterp->size())) continue;
 		if(candidateInterp->size() != cansInterp->size()) continue;
+		sort(cansInterp->begin(),cansInterp->end());
 		vector<int> intersect;
 		set_intersection(cansInterp->begin(), cansInterp->end(), candidateInterp->begin(), candidateInterp->end(),
 				back_inserter(intersect));
@@ -220,17 +224,19 @@ void combine_concepts() {
 //							cout << "; ";
 				insert_compound_concept(bo, &candidates);
 				for (roleIt1 = rootRoles.begin(); roleIt1 < rootRoles.end(); ++roleIt1) {
+					if(roleIt == roleIt1) continue;
 					bo = new Equality(*roleIt, *roleIt1);
-					cout << "\t";
-								(bo)->infix(cout);cout<<bo->GetInterpretation()->size();
-								for (unsigned d = 0; d < bo->GetInterpretation()->size(); d++) {
-									cout << instanceObjects[(*bo->GetInterpretation())[d]]->signature() << " ";
-								}
-								cout << "; ";
+//					cout << "\t";
+//								(bo)->infix(cout);cout<<bo->GetInterpretation()->size();
+//								for (unsigned d = 0; d < bo->GetInterpretation()->size(); d++) {
+//									cout << instanceObjects[(*bo->GetInterpretation())[d]]->signature() << " ";
+//								}
+//								cout << "; ";
 					insert_compound_concept(bo, &candidates);
 				}
 			}
 			for (conceptIt1 = rootConcepts.begin(); conceptIt1 < rootConcepts.end(); ++conceptIt1) {
+				if(conceptIt == conceptIt1) continue;
 				bo = new Join(*conceptIt, *conceptIt1);
 //				cout << "\t";
 //							(bo)->infix(cout);

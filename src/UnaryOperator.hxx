@@ -15,7 +15,7 @@ public:
 	UnaryOperator(Expression *child,char op);
 	virtual ~UnaryOperator();
 	void print(std::ostream& s) const {s<<op;}
-	void infix(std::ostream& s) const { s<<"(";print(s);child->infix(s);s<<")"; }
+	void infix(std::ostream& s) const { ;print(s);s<<"(";child->infix(s);s<<")"; }
 	void UpdateInterpretation();
 	std::vector<Expression*> GetChildren();
 };

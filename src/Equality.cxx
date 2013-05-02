@@ -23,31 +23,28 @@ void Equality::UpdateInterpretation() {
 	this->left->UpdateInterpretation();
 	this->right->UpdateInterpretation();
 	ClearInterpretation();
-	std::vector<std::pair<int, int> >* leftInterpretation =
-			(this->left)->GetRoleInterpretation();
-	std::vector<std::pair<int, int> >* rightInterpretation =
-			(this->right)->GetRoleInterpretation();
+	std::vector<std::pair<int, int> >* leftInterpretation = (this->left)->GetRoleInterpretation();
+	std::vector<std::pair<int, int> >* rightInterpretation = (this->right)->GetRoleInterpretation();
 
-	if (leftInterpretation == NULL || leftInterpretation->size() == 0
-			|| rightInterpretation == NULL || rightInterpretation->size() == 0)
+	if (leftInterpretation == NULL || leftInterpretation->size() == 0 || rightInterpretation == NULL
+			|| rightInterpretation->size() == 0)
 		return;
 
-	std::vector<std::pair<int, int> >::iterator first =
-			rightInterpretation->begin(), last = rightInterpretation->end(),
-			first1 = leftInterpretation->begin(), last1 =
-					leftInterpretation->end();
+	std::vector<std::pair<int, int> >::iterator it = rightInterpretation->begin(), last = rightInterpretation->end(),
+			it1 = leftInterpretation->begin(), last1 = leftInterpretation->end();
 	if (leftInterpretation->size() < rightInterpretation->size()) {
-		first1 = rightInterpretation->begin();
+		it1 = rightInterpretation->begin();
 		last1 = rightInterpretation->end();
-		first = leftInterpretation->begin();
+		it = leftInterpretation->begin();
 		last = leftInterpretation->end();
 	}
-	const std::vector<std::pair<int, int> >::iterator tmp = first1;
-	for (; first != last; ++first) {
-		for (first1 = tmp; first1 != last1; ++first1) {
-			if (first->first == first1->first
-					&& first->second == first1->second) {
-				this->interpretation.push_back(first->first);
+	const std::vector<std::pair<int, int> >::iterator tmp = it1;
+	for (; it != last; ++it) {
+		for (it1 = tmp; it1 != last1; ++it1) {
+			if (it->first == it1->first && it->second == it1->second
+					&& std::find(this->interpretation.begin(), this->interpretation.end(), it->first)
+							== this->interpretation.end()) {
+				this->interpretation.push_back(it->first);
 				break;
 			}
 		}
