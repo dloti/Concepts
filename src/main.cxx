@@ -72,7 +72,8 @@ void initialize_root_concepts() {
 
 bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateConcepts,
 		Expression* childConcept = NULL) {
-	if (operationExpr->GetInterpretation()->size() == 0)
+	vector<int>* candidateInterp = operationExpr->GetInterpretation();
+	if (candidateInterp->size() == 0)
 		return false;
 //	if (childConcept != NULL) {
 //		if (typeid(*childConcept) == typeid(Not))
@@ -82,29 +83,41 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 //				return false;
 //		}
 //	}
-
 	for (unsigned i = 0; i < rootConcepts.size(); i++) {
 		vector<int>* rootInterp = rootConcepts[i]->GetInterpretation();
-		if (rootInterp->size() == 0)
-			continue;
-		vector<int>* candidateInterp = operationExpr->GetInterpretation();
+		if (rootInterp->size() == 0 || (candidateInterp->size() != rootInterp->size())) continue;
 		vector<int> intersect;
 		set_intersection(rootInterp->begin(), rootInterp->end(), candidateInterp->begin(), candidateInterp->end(),
 				back_inserter(intersect));
-		if (intersect.size() == rootInterp->size())
+		if (intersect.size() == candidateInterp->size()) {
+//			cout << "out by";
+//			rootConcepts[i]->infix(cout);
+//			cout << " ";
+//			for (unsigned d = 0; d < rootConcepts[i]->GetInterpretation()->size(); d++) {
+//				cout << instanceObjects[(*rootInterp)[d]]->signature() << " ";
+//			}
+//			cout << "; "<<endl;
 			return false;
+		}
 	}
 
 	for (unsigned i = 0; i < candidateConcepts->size(); i++) {
 		vector<int>* cansInterp = (*candidateConcepts)[i]->GetInterpretation();
-		if (cansInterp->size() == 0)
-			continue;
-		vector<int>* candidateInterp = operationExpr->GetInterpretation();
+		if (cansInterp->size() == 0 || (candidateInterp->size() != cansInterp->size())) continue;
+		if(candidateInterp->size() != cansInterp->size()) continue;
 		vector<int> intersect;
 		set_intersection(cansInterp->begin(), cansInterp->end(), candidateInterp->begin(), candidateInterp->end(),
 				back_inserter(intersect));
-		if (intersect.size() == cansInterp->size())
+		if (intersect.size() == candidateInterp->size()) {
+//			cout << "out by";
+//						rootConcepts[i]->infix(cout);
+//						cout << " ";
+//						for (unsigned d = 0; d < rootConcepts[i]->GetInterpretation()->size(); d++) {
+//							cout << instanceObjects[(*cansInterp)[d]]->signature() << " ";
+//						}
+//						cout << "; "<<endl;
 			return false;
+		}
 	}
 	return true;
 }
@@ -160,22 +173,22 @@ void update_subsets(vector<Expression*> candidateConcepts) {
 			objectSubsets.push_back(*(candidateConcepts[i]->GetInterpretation()));
 	}
 }
-void print_expressions(string title, vector<Expression*>* expressions){
+void print_expressions(string title, vector<Expression*>* expressions) {
 	vector<Expression*>::iterator it;
-		cout << endl << "-"<<title<<"-" << endl;
-		if(expressions->begin() ==  expressions->end()){
-			cout<<"\tNo expressions"<<endl;
-			return;
+	cout << endl << "-" << title << "-" << endl;
+	if (expressions->begin() == expressions->end()) {
+		cout << "\tNo expressions" << endl;
+		return;
+	}
+	for (it = expressions->begin(); it != expressions->end(); ++it) {
+		cout << "\t";
+		(*it)->infix(cout);
+		cout << " Interp: ";
+		for (unsigned i = 0; i < (*it)->GetInterpretation()->size(); i++) {
+			cout << instanceObjects[(*(*it)->GetInterpretation())[i]]->signature() << " ";
 		}
-		for (it = expressions->begin(); it != expressions->end(); ++it) {
-			cout << "\t";
-			(*it)->infix(cout);
-			cout << " Interp: ";
-			for (unsigned i = 0; i < (*it)->GetInterpretation()->size(); i++) {
-				cout << instanceObjects[(*(*it)->GetInterpretation())[i]]->signature() << " ";
-			}
-			cout << endl;
-		}
+		cout << endl;
+	}
 }
 
 void combine_concepts() {
@@ -186,44 +199,69 @@ void combine_concepts() {
 	update_subsets();
 	double max_subset_num = std::pow(2., instanceObjects.size());
 	cout << "MAX_SUBSET_NUM:" << max_subset_num << endl;
-	while (objectSubsets.size()-1 < max_subset_num) {
+	while (objectSubsets.size() - 1 < max_subset_num) {
 		for (conceptIt = rootConcepts.begin(); conceptIt < rootConcepts.end(); ++conceptIt) {
 			uo = new Not(*conceptIt, &instanceObjects);
-			cout<<" ";(uo)->infix(cout);
+//			cout << "\t";
+//			(uo)->infix(cout);
+//			for (unsigned d = 0; d < uo->GetInterpretation()->size(); d++) {
+//				cout << instanceObjects[(*uo->GetInterpretation())[d]]->signature() << " ";
+//			}
+//			cout << "; ";
 			insert_compound_concept(uo, &candidates, *conceptIt);
 			for (roleIt = rootRoles.begin(); roleIt < rootRoles.end(); ++roleIt) {
+
 				bo = new ValueRestriction(*roleIt, *conceptIt);
+//				cout << " ";
+//							(bo)->infix(cout);
+//							for (unsigned d = 0; d < bo->GetInterpretation()->size(); d++) {
+//								cout << instanceObjects[(*bo->GetInterpretation())[d]]->signature() << " ";
+//							}
+//							cout << "; ";
 				insert_compound_concept(bo, &candidates);
 				for (roleIt1 = rootRoles.begin(); roleIt1 < rootRoles.end(); ++roleIt1) {
 					bo = new Equality(*roleIt, *roleIt1);
+					cout << "\t";
+								(bo)->infix(cout);cout<<bo->GetInterpretation()->size();
+								for (unsigned d = 0; d < bo->GetInterpretation()->size(); d++) {
+									cout << instanceObjects[(*bo->GetInterpretation())[d]]->signature() << " ";
+								}
+								cout << "; ";
 					insert_compound_concept(bo, &candidates);
 				}
 			}
 			for (conceptIt1 = rootConcepts.begin(); conceptIt1 < rootConcepts.end(); ++conceptIt1) {
 				bo = new Join(*conceptIt, *conceptIt1);
+//				cout << "\t";
+//							(bo)->infix(cout);
+//							for (unsigned d = 0; d < bo->GetInterpretation()->size(); d++) {
+//								cout << instanceObjects[(*bo->GetInterpretation())[d]]->signature() << " ";
+//							}
+//							cout << "; ";
 				insert_compound_concept(bo, &candidates, *conceptIt1);
 			}
 		}
 		unsigned previousSubsetsSize = objectSubsets.size();
 		update_subsets(candidates);
-		print_expressions("Candidates",&candidates);
-		cout << "SUBSETS:" << objectSubsets.size() -1 << endl;
-		for(unsigned i = 0;i<objectSubsets.size();i++){
-			cout<<"\t";
-			for(unsigned j=0;j<objectSubsets[i].size();j++)
-				cout<<" "<< instanceObjects[objectSubsets[i][j]]->signature();
+		print_expressions("Candidates", &candidates);
+		cout << "SUBSETS:" << objectSubsets.size() - 1 << endl;
+		for (unsigned i = 0; i < objectSubsets.size(); i++) {
+			cout << "\t";
+			for (unsigned j = 0; j < objectSubsets[i].size(); j++)
+				cout << " " << instanceObjects[objectSubsets[i][j]]->signature();
 		}
-		cout<<endl;
+		cout << endl;
 		if (previousSubsetsSize == objectSubsets.size())
 			break;
 		for (conceptIt = candidates.begin(); conceptIt < candidates.end(); ++conceptIt) {
 			rootConcepts.push_back(*conceptIt);
 		}
+		candidates.clear();
 	}
 }
 
 void combine_roles() {
-	vector<Expression*>::iterator roleIt, roleIt1;
+	vector<Expression*>::iterator roleIt;
 	vector<Expression*> candidates;
 	UnaryOperator* uo;
 	for (roleIt = rootRoles.begin(); roleIt < rootRoles.end(); ++roleIt) {
@@ -232,7 +270,6 @@ void combine_roles() {
 		uo = new TransitiveClosure(*roleIt);
 		candidates.push_back(uo);
 	}
-
 	for (roleIt = candidates.begin(); roleIt < candidates.end(); ++roleIt) {
 		rootRoles.push_back(*roleIt);
 	}
@@ -360,40 +397,9 @@ void print_ruleset() {
 }
 
 void print_interpretations(STRIPS_Problem& prob) {
-//	map<string, ConceptNode*>::iterator pos;
-//	for (pos = primitiveConcepts.begin(); pos != primitiveConcepts.end(); ++pos) {
-//		cout << endl << "Concept: " << pos->first << " Individuals: " << endl;
-//		for (unsigned i = 0; i < pos->second->GetInterpretation()->size(); i++) {
-//			cout << instanceObjects[(*pos->second->GetInterpretation())[i]]->signature() << " ";
-//		}
-//		cout << endl;
-//	}
-//
-//	for (pos = typeConcepts.begin(); pos != typeConcepts.end(); ++pos) {
-//		cout << endl << "Type concept: " << pos->first << " Individuals: " << endl;
-//		for (unsigned i = 0; i < pos->second->GetInterpretation()->size(); i++) {
-//			cout << instanceObjects[(*pos->second->GetInterpretation())[i]]->signature() << " ";
-//		}
-//		cout << endl;
-//	}
-
-////Primitive role interpretations
-//	map<string, RoleNode*>::iterator itrl;
-//	vector<pair<int, int> >::iterator itintrp;
-//	for (itrl = primitiveRoles.begin(); itrl != primitiveRoles.end(); ++itrl) {
-//		cout << endl << "Role: " << itrl->first << " Pairs: " << endl;
-//		vector<pair<int, int> >* rinterpretation = (*itrl->second).GetRoleInterpretation();
-//
-//		for (itintrp = rinterpretation->begin(); itintrp != rinterpretation->end(); ++itintrp) {
-//			cout << "(" << instanceObjects[(int) (itintrp->first)]->signature() << ","
-//					<< instanceObjects[(int) (itintrp->second)]->signature() << ")" << " ";
-//		}
-//		cout << endl;
-//	}
-
-	print_expressions("Concepts",&rootConcepts);
+	print_expressions("Concepts", &rootConcepts);
 	vector<Expression*>::iterator it;
-	cout <<"-Roles-" << endl;
+	cout << "-Roles-" << endl;
 	for (it = rootRoles.begin(); it != rootRoles.end(); ++it) {
 		cout << "\t";
 		(*it)->infix(cout);
@@ -576,17 +582,19 @@ void update_primitive_interpretations(STRIPS_Problem& prob, Node* n) {
 
 }
 
-void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
+void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan, bool firstPlan = false) {
 
 	for (unsigned k = 0; k < plan.size() - 1; k++) {
 		std::cout << endl << "State(" << k + 1 << "): ";
 		update_primitive_interpretations(prob, plan[k]);
-		if (k == 0) {
+		if (firstPlan && k == 0) {
 			initialize_root_concepts();
+			combine_roles();
 		}
 		print_interpretations(prob);
 		cout << "-Combining concepts-" << endl;
 		combine_concepts();
+
 
 		//Adding rules
 		aig_tk::Action* a = plan[k + 1]->op();
@@ -645,7 +653,7 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan) {
 	}
 }
 
-void get_plan(STRIPS_Problem& strips_prob, vector<aig_tk::Node*>& plan) {
+void get_plan(STRIPS_Problem& strips_prob, vector<aig_tk::Node*>& plan, bool firstPlan = false) {
 	aig_tk::Max_Heuristic estimator;
 	estimator.initialize(strips_prob);
 	estimator.compute(strips_prob.init());
@@ -685,7 +693,7 @@ void get_plan(STRIPS_Problem& strips_prob, vector<aig_tk::Node*>& plan) {
 	cout << "Goal interpretations" << endl;
 	print_goal_interpretations(strips_prob);
 	cout << "Update primitive interpretations" << endl;
-	interpret_plan(strips_prob, plan);
+	interpret_plan(strips_prob, plan, firstPlan);
 }
 
 void reset_globals() {
@@ -1010,14 +1018,13 @@ int main(int argc, char** argv) {
 
 		if (i == 0) {
 			get_primitive_concepts_relations(*strips_prob);
-			combine_roles();
 		}
 
 		set_instance_objects(*strips_prob);
 
 		cout << "Extracted primitive concepts" << endl;
 		plan = new vector<aig_tk::Node*>();
-		get_plan(*strips_prob, *plan);
+		get_plan(*strips_prob, *plan, ((i==0)?true:false));
 		vector<aig_tk::Action*>* p = new vector<aig_tk::Action*>();
 		for (unsigned j = 0; j < plan->size(); j++) {
 			p->push_back((*plan)[j]->op());

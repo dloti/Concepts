@@ -15,6 +15,7 @@ Equality::Equality(Expression* left, Expression* right) :
 }
 
 std::vector<int>* Equality::GetInterpretation() {
+	this->UpdateInterpretation();
 	return &(this->interpretation);
 }
 
