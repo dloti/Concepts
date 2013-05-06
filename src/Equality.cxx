@@ -15,7 +15,7 @@ Equality::Equality(Expression* left, Expression* right) :
 }
 
 std::vector<int>* Equality::GetInterpretation() {
-	this->UpdateInterpretation();
+	//this->UpdateInterpretation();
 	return &(this->interpretation);
 }
 
@@ -49,6 +49,8 @@ void Equality::UpdateInterpretation() {
 			}
 		}
 	}
+
+	std::sort(this->interpretation.begin(),this->interpretation.end());
 }
 
 void Equality::SetLeft(Expression* left) {

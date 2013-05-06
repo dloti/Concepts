@@ -12,7 +12,7 @@ TransitiveClosure::TransitiveClosure(Expression* child) :
 }
 
 std::vector<std::pair<int, int> >* TransitiveClosure::GetRoleInterpretation() {
-	this->UpdateInterpretation();
+	//this->UpdateInterpretation();
 	return &(this->roleInterpretation);
 }
 

@@ -8,12 +8,11 @@
 #ifndef RULE_HXX_
 #define RULE_HXX_
 #include "Expression.hxx"
-//#include<iostream>
 #include <planning/Action.hxx>
 class Rule {
 protected:
 	double coverage, correct;
-	int examples;
+	double examples;
 	std::vector<Expression*> concepts;
 	aig_tk::Action* action;
 public:
@@ -25,9 +24,9 @@ public:
 	inline int GetMaxConcepts(){ if(action== NULL) return 0; return action->pddl_objs_idx().size();}
 	inline double GetCoverage(){ return coverage/examples;}
 	inline double GetCorrect(){ return correct/examples;}
-	inline void IncCoverage(){ coverage+=1;}
-	inline void IncCorrect(){ correct+=1;}
-	inline int GetExamples(){ return examples;}
+	inline void IncCoverage(){ coverage++;}
+	inline void IncCorrect(){ correct++;}
+	inline double GetExamples(){ return examples;}
 	inline void IncExamples(){ examples++;}
 	int GetCurrentCoverage();
 	friend std::ostream& operator<< (std::ostream &out, Rule &r);

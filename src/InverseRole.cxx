@@ -12,7 +12,7 @@ InverseRole::InverseRole(Expression *child):UnaryOperator(child, 'I') {
 }
 
 std::vector<std::pair<int, int> >* InverseRole::GetRoleInterpretation() {
-	this->UpdateInterpretation();
+	//this->UpdateInterpretation();
 	return &(this->roleInterpretation);
 }
 

@@ -19,7 +19,8 @@ aig_tk::Action* Rule::GetAction() {
 }
 
 bool Rule::AddConcept(Expression* concept) {
-	if (concepts.size() >= action->pddl_objs_idx().size())
+	//if (concepts.size() >= action->pddl_objs_idx().size())
+	if(concepts.size()>0)
 		return false;
 	concepts.push_back(concept);
 	return true;
@@ -61,7 +62,7 @@ int Rule::GetCurrentCoverage() {
 	for (unsigned i = 0; i < this->concepts.size(); i++) {
 		currentCoverage += this->concepts[i]->GetInterpretation()->size();
 	}
-	return currentCoverage;
+	//return this->concepts[0]->GetInterpretation()->size();
 }
 
 Rule::~Rule() {

@@ -15,9 +15,7 @@ Join::Join(Expression* left, Expression* right) :
 }
 
 std::vector<int>* Join::GetInterpretation() {
-
-	this->UpdateInterpretation();
-
+	//this->UpdateInterpretation();
 	return &(this->interpretation);
 }
 
@@ -35,6 +33,7 @@ void Join::UpdateInterpretation() {
 
 	std::set_intersection(first1, last1, first2, last2,
 			std::back_inserter(this->interpretation));
+	//std::sort(this->interpretation.begin(),this->interpretation.end());
 }
 
 Join::~Join() {

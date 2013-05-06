@@ -13,7 +13,7 @@ Not::Not(Expression* child, aig_tk::PDDL_Object_Ptr_Vec* allObjects) :
 }
 
 std::vector<int>* Not::GetInterpretation() {
-	this->UpdateInterpretation();
+	//this->UpdateInterpretation();
 	return &(this->interpretation);
 }
 
@@ -29,6 +29,7 @@ void Not::UpdateInterpretation() {
 			continue;
 		interpretation.push_back(i);
 	}
+	std::sort(this->interpretation.begin(),this->interpretation.end());
 }
 
 Not::~Not() {

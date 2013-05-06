@@ -75,7 +75,7 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 	vector<int>* candidateInterp = operationExpr->GetInterpretation();
 	if (candidateInterp->size() == 0)
 		return false;
-	sort(candidateInterp->begin(),candidateInterp->end());
+	sort(candidateInterp->begin(), candidateInterp->end());
 //	if (childConcept != NULL) {
 //		if (typeid(*childConcept) == typeid(Not))
 //			return false;
@@ -86,8 +86,9 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 //	}
 	for (unsigned i = 0; i < rootConcepts.size(); i++) {
 		vector<int>* rootInterp = rootConcepts[i]->GetInterpretation();
-		if (rootInterp->size() == 0 || (candidateInterp->size() != rootInterp->size())) continue;
-		sort(rootInterp->begin(),rootInterp->end());
+		if (rootInterp->size() == 0 || (candidateInterp->size() != rootInterp->size()))
+			continue;
+		sort(rootInterp->begin(), rootInterp->end());
 
 		vector<int> intersect;
 		set_intersection(rootInterp->begin(), rootInterp->end(), candidateInterp->begin(), candidateInterp->end(),
@@ -106,9 +107,11 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 
 	for (unsigned i = 0; i < candidateConcepts->size(); i++) {
 		vector<int>* cansInterp = (*candidateConcepts)[i]->GetInterpretation();
-		if (cansInterp->size() == 0 || (candidateInterp->size() != cansInterp->size())) continue;
-		if(candidateInterp->size() != cansInterp->size()) continue;
-		sort(cansInterp->begin(),cansInterp->end());
+		if (cansInterp->size() == 0 || (candidateInterp->size() != cansInterp->size()))
+			continue;
+		if (candidateInterp->size() != cansInterp->size())
+			continue;
+		sort(cansInterp->begin(), cansInterp->end());
 		vector<int> intersect;
 		set_intersection(cansInterp->begin(), cansInterp->end(), candidateInterp->begin(), candidateInterp->end(),
 				back_inserter(intersect));
@@ -128,6 +131,7 @@ bool concept_allowed(Expression* operationExpr, vector<Expression*>* candidateCo
 
 void insert_compound_concept(Expression* operationExpr, vector<Expression*>* candidateConcepts,
 		Expression* childConcept = NULL) {
+	operationExpr->UpdateInterpretation();
 	if (concept_allowed(operationExpr, candidateConcepts, childConcept)) {
 		candidateConcepts->push_back(operationExpr);
 	} else {
@@ -201,7 +205,7 @@ void combine_concepts() {
 	UnaryOperator* uo;
 	BinaryOperator* bo;
 	update_subsets();
-	double max_subset_num = std::pow(2., instanceObjects.size());
+	double max_subset_num = std::pow(2., instanceObjects.size())-1;
 	cout << "MAX_SUBSET_NUM:" << max_subset_num << endl;
 	while (objectSubsets.size() - 1 < max_subset_num) {
 		for (conceptIt = rootConcepts.begin(); conceptIt < rootConcepts.end(); ++conceptIt) {
@@ -224,7 +228,8 @@ void combine_concepts() {
 //							cout << "; ";
 				insert_compound_concept(bo, &candidates);
 				for (roleIt1 = rootRoles.begin(); roleIt1 < rootRoles.end(); ++roleIt1) {
-					if(roleIt == roleIt1) continue;
+					if (roleIt == roleIt1)
+						continue;
 					bo = new Equality(*roleIt, *roleIt1);
 //					cout << "\t";
 //								(bo)->infix(cout);cout<<bo->GetInterpretation()->size();
@@ -236,7 +241,8 @@ void combine_concepts() {
 				}
 			}
 			for (conceptIt1 = rootConcepts.begin(); conceptIt1 < rootConcepts.end(); ++conceptIt1) {
-				if(conceptIt == conceptIt1) continue;
+				if (conceptIt == conceptIt1)
+					continue;
 				bo = new Join(*conceptIt, *conceptIt1);
 //				cout << "\t";
 //							(bo)->infix(cout);
@@ -584,8 +590,6 @@ void update_primitive_interpretations(STRIPS_Problem& prob, Node* n) {
 				primitiveConcepts[current_predicate]->GetInterpretation()->end());
 		cout << " | ";
 	}
-	update_compound_interpretations();
-
 }
 
 void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan, bool firstPlan = false) {
@@ -597,42 +601,49 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan, bool firs
 			initialize_root_concepts();
 			combine_roles();
 		}
+		update_compound_interpretations();
 		print_interpretations(prob);
 		cout << "-Combining concepts-" << endl;
 		combine_concepts();
-
 
 		//Adding rules
 		aig_tk::Action* a = plan[k + 1]->op();
 		aig_tk::Index_Vec objs_idx = a->pddl_objs_idx();
 		sort(objs_idx.begin(), objs_idx.end());
-
-		//TODO loop here
-		Rule* r = new Rule(a);
-		unsigned j = 0;
-		for (unsigned g = 0; g < rootConcepts.size() && j < 1; g++) {
+		Rule* r;
+		vector<int> intersect;
+		for (unsigned g = 0; g < rootConcepts.size(); g++) {
+			r = new Rule(a);
 			vector<int>* interp = rootConcepts[g]->GetInterpretation();
 			if (interp->size() == 0)
 				continue;
-			sort(interp->begin(), interp->end());
-			if ((int) (*interp)[0] == (int) objs_idx[j]) {
-				j++;
-				if (!r->AddConcept(rootConcepts[g]))
-					cout << "Error";
-			}
-		}
 
-		if (r->GetConcepts().size() == objs_idx.size()) {
+			set_intersection(interp->begin(), interp->end(), objs_idx.begin(), objs_idx.end(),
+					back_inserter(intersect));
+
+			if (intersect.size() > 0) {
+				intersect.clear();
+				if (!r->AddConcept(rootConcepts[g])){
+					cout << "!...!Error!...!";
+					return;
+				}
+			}
+
 			bool found = false;
-			for (unsigned i = 0; i < ruleSet.size(); i++)
+			for (unsigned i = 0; i < ruleSet.size(); i++){
 				if (ruleSet[i] == *r) {
 					found = true;
 					break;
 				}
-			if (!found)
+			}
+
+			if (!found && r->GetConcepts().size() > 0){
 				ruleSet.push_back(*r);
-		} else
-			delete r;
+				break;
+			}
+			else
+				delete r;
+		}
 
 		//Rule coverage
 		for (unsigned i = 0; i < ruleSet.size(); i++) {
@@ -970,6 +981,7 @@ void solve(STRIPS_Problem& prob) {
 	get_goal_interpretations(prob);
 	while (!(n->s()->entails(prob.goal())) && max > 0) {
 		update_primitive_interpretations(prob, n);
+		update_compound_interpretations();
 		std::sort(ruleSet.begin(), ruleSet.end(), ruleSortPredicate);
 		vector<Rule>::iterator it = ruleSet.begin();
 		bool applied = false;
@@ -995,20 +1007,19 @@ void solve(STRIPS_Problem& prob) {
 }
 
 int main(int argc, char** argv) {
-	if (argc < 4) {
+	if (argc < 3) {
 		std::cerr << "No prob description provided, bailing out!" << std::endl;
 		std::exit(1);
 	}
 
 	std::string folder(argv[1]);
-	std::string domain(argv[2]);
-	int instance_num(atoi(argv[3]));
+	int instance_num(atoi(argv[2]));
 	std::string txt_output_filename("prob.txt.strips");
 	string instance("instance");
 
 	string instance_path;
 	folder = "./problems/" + folder + "/";
-	domain = folder + domain;
+	string domain = folder + "domain.pddl";
 	vector<vector<aig_tk::Action*>*> plans;
 	std::vector<aig_tk::Node*>* plan;
 	aig_tk::STRIPS_Problem* strips_prob;
@@ -1030,7 +1041,7 @@ int main(int argc, char** argv) {
 
 		cout << "Extracted primitive concepts" << endl;
 		plan = new vector<aig_tk::Node*>();
-		get_plan(*strips_prob, *plan, ((i==0)?true:false));
+		get_plan(*strips_prob, *plan, ((i == 0) ? true : false));
 		vector<aig_tk::Action*>* p = new vector<aig_tk::Action*>();
 		for (unsigned j = 0; j < plan->size(); j++) {
 			p->push_back((*plan)[j]->op());

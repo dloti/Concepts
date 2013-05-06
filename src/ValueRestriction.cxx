@@ -21,7 +21,7 @@ void ValueRestriction::SetRight(Expression* right) {
 	this->right = right;
 }
 std::vector<int>* ValueRestriction::GetInterpretation() {
-	this->UpdateInterpretation();
+	//this->UpdateInterpretation();
 	return &(this->interpretation);
 }
 
