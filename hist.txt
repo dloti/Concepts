@@ -1,0 +1,871 @@
+    1  sudo apt-get install mercurial g++ make python flex bison gawk
+    2  sudo apt-get install g++-multilib
+    3  hg clone http://hg.fast-downward.org Planiranje
+    4  s
+    5  ls
+    6  cd Planiranje
+    7  ls
+    8  cd downward
+    9  cd src
+   10  cd ..
+   11  mv Planiranje downward
+   12  ls
+   13  cd downward
+   14  cd src
+   15  ./build_all
+   16  ./downward --search "astar(lmcut())" < output
+   17  ls
+   18  cd ..
+   19  s
+   20  ls
+   21  cd src
+   22  cd searchç
+   23  cd search
+   24  cd downward
+   25  ls
+   26  ./downward ipc seq-sat-lama-2011 < output
+   27  ./downward seq-sat-lama-2011 < output
+   28  ./downward seq-sat-lama-2011 > output
+   29  cat output
+   30  s
+   31  ls
+   32  cat downward
+   33  ./downward --search "astar(lmcut())" < output
+   34  ls
+   35  ./downward
+   36  ./downward --search "astar(lmcut())"
+   37  d ..
+   38  cd ..
+   39  ls
+   40  cd benchmarks
+   41  ls
+   42  cd blocks
+   43  ls
+   44  translate/translate.py domain.pddl probBLOCKS-10-0.pddl
+   45  cd ..
+   46  ls
+   47  cd ..
+   48  ls
+   49  cd misc
+   50  ls
+   51  cd ..
+   52  ls
+   53  cd scripts
+   54  ls
+   55  cd ..
+   56  cd src
+   57  ls
+   58  cd translate
+   59  ls
+   60  cd tests
+   61  ls
+   62  cd ..
+   63  translate.py 
+   64  cd pddl
+   65  ls
+   66  cd ..
+   67  ls
+   68  cd ..
+   69  cd benchmarks/
+   70  cd blocks/
+   71  ls
+   72  ../../src/translate/translate.py domain.pddl probBLOCKS-10-0.pddl 
+   73  ls
+   74  ../../src/preprocess/preprocess < output.sas 
+   75  ../../src/search/downward --search SEARCH < output
+   76  s
+   77  ls
+   78  cat output
+   79  ../../src/search/downward --search "astar(lmcut())" < output
+   80  ../../src/search/downward --search "astar(merge_and_shrink())" < output
+   81  cd downward/
+   82  cd benchmarks/
+   83  cd knightstour/
+   84  ../../src/translate/translate.py springer.pddl springer1.pddl 
+   85  ../../src/
+   86  ./downward --search "astar(lmcut())" < output
+   87  ../../src/downward --search "astar(lmcut())" < output
+   88  ./downward --search "astar(lmcut())" < output
+   89  ../../src/./downward --search "astar(lmcut())" < output
+   90  ../../src/downward --search "astar(lmcut())" < output
+   91  ./downward
+   92  cd ..
+   93  ./downward
+   94  cd src
+   95  ls
+   96  cd search
+   97  ls
+   98  ./downward
+   99  cd ..
+  100  cd benchmark
+  101  cd benchmarks/
+  102  cd knightstour/
+  103  ../../src/search/downward  --search "astar(lmcut())" < output
+  104  ../../src/translate/translate.py domain.pddl problem.pddl
+  105  ../../src/preprocess/preprocess < output.sas 
+  106  ../../src/search/downward  --search "astar(lmcut())" < output
+  107  ls
+  108  ./GBFS_hadd_32 -d domain.pddl -i problem.pddl -o GBFSOutput
+  109  sudo su
+  110  chmod +ux GBFS_hadd_32 
+  111  chmod +x GBFS_hadd_32 
+  112  ./GBFS_hadd_32 -d domain.pddl -i problem.pddl -o GBFSOutput
+  113  ./GBFS_hadd_32 -d springer.pddl -i springer1.pddl -o GBFSOutput
+  114  ls
+  115  ./GBFS_hadd_32 -d domain.pddl -i problem.pddl -o GBFSOutput
+  116  ./GBFS_hadd_32 -d domain.pddl -i problem1.pddl -o GBFSOutput
+  117  sudo apt install git
+  118  sudo install git
+  119  sudo install ?
+  120  sudo apt-get install git
+  121  ./build-toolkit
+  122  cd aptk
+  123  ./build-toolkit 
+  124  shut -i now
+  125  shutdown -i now
+  126  shutdown now
+  127  sudo shutdown now
+  128  cd reinforcement/
+  129  ls
+  130  python gridworld.py -m
+  131  cd reinforcement/
+  132  ls
+  133  python gridworld.py -m
+  134  python gridworld.py -h
+  135  python gridworld.py -g MazeGrid
+  136  python gridworld.py -a value -i 5
+  137  python gridworld.py -m
+  138  python gridworld.py -a value -i 5
+  139  python gridworld.py -a value -i 100 -k 10
+  140  ls
+  141  python gridworld.py -a value -i 5
+  142  cd layouts/
+  143  ls
+  144  cd ..
+  145  ls
+  146  python gridworld.py -a value -i 5
+  147  cd eclipse/
+  148  ./eclipse 
+  149  cd reinforcement/
+  150  python gridworld.py -a value -i 5
+  151  python gridworld.py -a value -i 100
+  152  python gridworld.py -a value -i 6
+  153  python gridworld.py -a value -i 5
+  154  python gridworld.py -a value -i 4
+  155  python gridworld.py -a value -i 3
+  156  less
+  157  less -help
+  158  less --help
+  159  ls
+  160  less layout.py
+  161  cd reinforcement/
+  162  python gridworld.py -a value -i 5
+  163  python gridworld.py -a value -i 3
+  164  python gridworld.py -a value -i 6
+  165  python gridworld.py -a value -i 100
+  166  python gridworld.py -a value -i 0
+  167  python gridworld.py -a value -i 1
+  168  python gridworld.py -a value -i 2
+  169  python gridworld.py -a value -i 3
+  170  python gridworld.py -a value -i 4
+  171  python gridworld.py -a value -i 5
+  172  python gridworld.py -a value -i 6
+  173  python gridworld.py -a value -i 5
+  174  python gridworld.py -a value -i 3
+  175  python gridworld.py -a value -i 5
+  176  python gridworld.py -a value -i 3
+  177  python gridworld.py -a value -i 5
+  178  python gridworld.py -a value -i 6
+  179  python gridworld.py -a value -i 5
+  180  python gridworld.py -a value -i 6
+  181  python gridworld.py -a value -i 5
+  182  python gridworld.py -a value -i 4
+  183  python gridworld.py -a value -i 3
+  184  python gridworld.py -a value -i 4
+  185  python gridworld.py -a value -i 5
+  186  cd ..
+  187  cd workspace/
+  188  ls
+  189  cd reinforcement/
+  190  ls
+  191  python gridworld.py -a value -i 5
+  192  python gridworld.py -a value -i 4
+  193  python gridworld.py -a value -i 3
+  194  python gridworld.py -a value -i 5
+  195  python gridworld.py -a value -i 4
+  196  python gridworld.py -a value -i 5
+  197  python gridworld.py -a value -i 100 -k 10
+  198  python gridworld.py -a value -i 100 -k 1
+  199  python gridworld.py -a value -i 100 -g BridgeGrid --discount 0.9 --noise 0.2
+  200  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.9 --noise 0.2 --livingReward 0.0
+  201  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.9 --noise 0.2 --livingReward 0.5
+  202  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.5 --noise 0.2 --livingReward 0.5
+  203  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.5 --noise 0.2 --livingReward 0.9
+  204  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.5 --noise 0.0 --livingReward 0.9
+  205  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.5 --noise 0.0 --livingReward 0.0
+  206  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.9 --noise 0.0 --livingReward 0.0
+  207  python gridworld.py -a value -i 100 -g DiscountGrid --discount 0.9 --noise 0.2 --livingReward 0.0
+  208  ps -au
+  209  px -aux
+  210  ps -aux
+  211  ls
+  212  cd eclipse
+  213  ls
+  214  ./eclipse
+  215  cd ..
+  216  cd aptk
+  217  ls
+  218  make -f Makefile.txt clean
+  219  make
+  220  ls
+  221  make -f build-toolkit clean
+  222  cd toolkit/lib/libff && (make depend && make || exit 1)
+  223  scons
+  224  cd ..
+  225  cd..
+  226  cd ..
+  227  ls
+  228  cd apt
+  229  cd aptk
+  230  ls
+  231  cd examples/
+  232  ls
+  233  cd showcase/
+  234  ls
+  235  cd src
+  236  ls
+  237  cd ..
+  238  ./SConstruct
+  239  cat SConstruct 
+  240  ./SConstruct
+  241  cd ..
+  242  ls
+  243  cd ..
+  244  ls
+  245  cd Do
+  246  cd Downloads/
+  247  ls
+  248  cd nero2_linux_i386/
+  249  ls
+  250  ./nero.bin
+  251  ps -au
+  252  cd ..
+  253  ls
+  254  cd dloti
+  255  ls
+  256  cd Downloads/
+  257  cd nero2_linux_i386/
+  258  ls
+  259  ./nero.bin
+  260  ls
+  261  cd nero
+  262  cd Downloads/
+  263  ls
+  264  cd nero2_linux_i386/
+  265  ./nero
+  266  ls
+  267  ./nero.bin
+  268  adobereader-enu
+  269  cd aptk/
+  270  cd examples/
+  271  cd pro
+  272  cd proba/
+  273  cd src
+  274  emacs
+  275  emacs novi.cxx
+  276  ls
+  277  cd aptk
+  278  ls
+  279  cd examples
+  280  ls
+  281  cd proba
+  282  cd src/
+  283  ls
+  284  emacs main.cxx
+  285  ping 195.222.54.1
+  286  ifconfig
+  287  ifconfig eth0 shut
+  288  ifconfig eth0 ?
+  289  ifconfig --help
+  290  ifconfig eth0 down
+  291  sudo ifconfig eth0 down
+  292  sudo ifconfig eth0 up
+  293  sudo ifconfig eth0 down
+  294  sudo ifconfig eth0 up
+  295  ifconfig eth0
+  296  sudo ifconfig eth0 down
+  297  sudo ifconfig eth0 up
+  298  sudo ifconfig eth0 down
+  299  sudo ifconfig eth0 up
+  300  ls
+  301  cd aptk
+  302  ls
+  303  cd examples
+  304  ls
+  305  cd showcase
+  306  ls
+  307  scons -f all
+  308  ./planner domain.pddl instance.pddl
+  309  scons -f all
+  310  ./planner domain.pddl instance.pddl
+  311  scons -f all
+  312  ./planner domain.pddl instance.pddl
+  313  scons -f all
+  314  ./planner domain.pddl instance.pddl
+  315  scons -f all
+  316  ./planner domain.pddl instance.pddl
+  317  scons -f all\
+  318  scons -f all
+  319  ./planner domain.pddl instance.pddl
+  320  scons -f all
+  321  ./planner domain.pddl instance.pddl
+  322  scons -f all
+  323  ./planner domain.pddl instance.pddl
+  324  scons -f all
+  325  ./planner domain.pddl instance.pddl
+  326  scons -f all
+  327  ./planner domain.pddl instance.pddl
+  328  scons -f all
+  329  ./planner domain.pddl instance.pddl
+  330  scons -f all
+  331  ./planner domain.pddl instance.pddl
+  332  scons -f all
+  333  ./planner domain.pddl instance.pddl
+  334  scons -f all
+  335  ./planner domain.pddl instance.pddl
+  336  scons -f all
+  337  ./planner domain.pddl instance.pddl
+  338  scons -f all
+  339  ./planner domain.pddl instance.pddl
+  340  scons -f all
+  341  ./planner domain.pddl instance.pddl
+  342  scons -f all
+  343  ./planner domain.pddl instance.pddl
+  344  scons -f all
+  345  ./planner domain.pddl instance.pddl
+  346  scons -f all
+  347  ./planner domain.pddl instance.pddl
+  348  scons -f all
+  349  ./planner domain.pddl instance.pddl
+  350  scons -f all
+  351  ./planner domain.pddl instance.pddl
+  352  ifconfig
+  353  ifconfig eth0
+  354  ifconfig
+  355  ping 195.222.54.1
+  356  ifconfig eth0
+  357  sudo apt-get install chromium
+  358  cd Projects/
+  359  ls
+  360  cd Concepts
+  361  ./planner domain.pddl 2
+  362  kill eclipse
+  363  kill -p eclipse
+  364  pid eclipse
+  365  eclipse
+  366  cd Projects/
+  367  ls
+  368  Cd Concepts
+  369  ls
+  370  cd Concepts/
+  371  ls
+  372  scons
+  373  scons -c
+  374  scons -Q debug=1
+  375  cd Projects/
+  376  ls
+  377  cd Concepts/
+  378  ls
+  379  ./planner domain.pddl 2
+  380  clear
+  381  ./planner domain.pddl 2
+  382  clear
+  383  -------------
+  384  ./planner domain.pddl 2
+  385  ./planner domain.pddl 2 > out.txt
+  386  ulimit -c unlimited
+  387  ./planner domain.pddl 2 > out.txt
+  388  gdb planner core
+  389  ./planner domain.pddl 2 > out.txt
+  390  gdb planner core
+  391  ./planner domain.pddl 2 > out.txt
+  392  gdb planner core
+  393  ./planner domain.pddl 2 > out.txt
+  394  gdb planner core
+  395  ./planner domain.pddl 2 > out.txt
+  396  gdb planner core
+  397  ./planner domain.pddl 2 > out.txt
+  398  gdb planner core
+  399  ./planner domain.pddl 2
+  400  ./planner domain.pddl 2 > out.txt
+  401  ifconfig eth0
+  402  sudo ifconfig eth0 shut
+  403  ls
+  404  cd Pr
+  405  Projects/
+  406  ls
+  407  cd Co
+  408  cd Projects/
+  409  cd Concepts/
+  410  ls
+  411  ./planner domain.pddl 2 > out.txt
+  412  scons
+  413  ./planner domain.pddl 2 > out.txt
+  414  ./planner domain.pddl 2
+  415  ./planner domain.pddl 2 > out.txt
+  416  gdb planner
+  417  scons -Q debug=1
+  418  gdb planner
+  419  ./planner domain.pddl 2 > out.txt
+  420  gdb planner
+  421  ./planner domain.pddl 2 > out.txt
+  422  gdb planner 
+  423  ./planner domain.pddl 2 > out.txt
+  424  gdb
+  425  gdb planner
+  426  ./planner domain.pddl 2 > out.txt
+  427  scons -Q debug=1
+  428  ./planner domain.pddl 2 > out.txt
+  429  scons -Q debug=1
+  430  ./planner domain.pddl 2 > out.txt
+  431  scons -Q debug=1
+  432  ./planner domain.pddl 2 > out.txt
+  433  gdb planner
+  434  ./planner domain.pddl 2 > out.txt
+  435  ./planner domain.pddl 2 
+  436  ls
+  437  cd src
+  438  ls
+  439  cd Operators
+  440  ls
+  441  cd ..
+  442  ls
+  443  scons -Q debug=1
+  444  ./planner domain.pddl 2 
+  445  ./planner domain.pddl 2 >out.txt
+  446  gdb planner
+  447  ./planner domain.pddl 2 >out.txt
+  448  gdb planner
+  449  ./planner domain.pddl 2 >out.txt
+  450  gdb planner
+  451  ./planner domain.pddl 2 >out.txt
+  452  gdb planner
+  453  ./planner domain.pddl 2 >out.txt
+  454  scons -Q debug=1
+  455  ./planner domain.pddl 2 >out.txt
+  456  gdb planner
+  457  ./planner domain.pddl 2 >out.txt
+  458  gdb planner
+  459  ./planner domain.pddl 2 >out.txt
+  460  ./planner domain.pddl 3 >out.txt
+  461  gdb planner
+  462  ./planner domain.pddl 3 >out.txt
+  463  ./planner domain.pddl 2 >out.txt
+  464  ./planner domain.pddl 3 >out.txt
+  465  python
+  466  ls
+  467  cd Projects
+  468  ls
+  469  cd spacebook
+  470  ls
+  471  git clone https://dloti@bitbucket.org/spacebook_upf/spacebook-goal-recognition.git
+  472  git clone https://dloti@bitbucket.org/spacebook_upf/spacebook-engine.git
+  473  git clone https://dloti@bitbucket.org/spacebook_upf/spacebook-demo.git
+  474  ls
+  475  cd ..
+  476  which cmake
+  477  gedit
+  478  cd projects/
+  479  cd Concept/
+  480  cd Concepts/
+  481  ls
+  482  ./planner domain.pddl 2
+  483  gdb planner
+  484  ./planner domain.pddl 2
+  485  gdb planner
+  486  ./planner domain.pddl 2
+  487  ./planner domain.pddl 4 > out.txt
+  488  ./planner blocks domain.pddl 4 > out.txt
+  489  ./planner blocks domain.pddl 2 > out.txt
+  490  ./planner logistics domain.pddl 1 > out.txt
+  491  ./planner blocks domain.pddl 4 > out.txt
+  492  ./planner gripper domain.pddl 9 > out.txt
+  493  gdb gripper
+  494  gdb planner
+  495  quit
+  496  ./planner blocks domain.pddl 10 > out.txt
+  497  ./planner gripper domain.pddl 9 > out.txt
+  498  gdb planner
+  499  ./planner gripper domain.pddl 9 > out.txt
+  500  gdb planner
+  501  ./planner gripper domain.pddl 9 > out.txt
+  502  quit
+  503  ./planner gripper domain.pddl 8 > out.txt
+  504  ./planner gripper domain.pddl 7 > out.txt
+  505  ./planner gripper domain.pddl 6 > out.txt
+  506  ./planner gripper domain.pddl 5 > out.txt
+  507  ./planner gripper domain.pddl 4 > out.txt
+  508  ./planner gripper domain.pddl 3 > out.txt
+  509  ./planner gripper domain.pddl 2 > out.txt
+  510  clear
+  511  echo $PYTHONPATH
+  512  cd ..
+  513  ls 
+  514  cd spacebook
+  515  ls
+  516  export PYTHONPATH="/home/dloti/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  517  clear
+  518  sudo apt-get install python-virtualenv
+  519  cd projects/
+  520  ls
+  521  cd spacebook/
+  522  ls
+  523  virtualenv venv
+  524  source ./venv/bin/activate
+  525  pip install Flask
+  526  cd spacebook-demo/
+  527  ls
+  528  python application.py
+  529  export PYTHONPATH="/home/dloti/projects/spacebook-engine:/home/dloti/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  530  python application.py
+  531  quit
+  532  exit
+  533  export PYTHONPATH="/home/dloti/projects/spacebook-engine:/home/dlot/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  534  cd projects/
+  535  cd spacebook/
+  536  cd spacebook-demo/
+  537  source ./venv/bin/activate
+  538  virtualenv venv
+  539  source ./venv/bin/activate
+  540  python application.py 
+  541  pip install Flask
+  542  python application.py 
+  543  echo $PYTHONPATH
+  544  deactivate
+  545  export PYTHONPATH="/home/dloti/projects/spacebook-engine:/home/dloti/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  546  echo $PYTHONPATH 
+  547  gedit ~/.bash_proflle
+  548  sudo gedit ~/.bash_proflle
+  549  echo $PYTHONPATH 
+  550  exec zsh -l
+  551  setenv PYTHONPATH 
+  552  export PYTHONPATH=
+  553  echo $PYTHONPATH 
+  554  export PYTHONPATH="/home/dloti/projects/spacebook-engine:/home/dloti/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  555  echo $PYTHONPATH
+  556  virtualenv venv
+  557  source ./venv/bin/activate
+  558  pip install Flask
+  559  python application.py 
+  560  echo PYTHONPATH
+  561  echo $PYTHONPATH
+  562  cat application.py 
+  563  deactivate
+  564  python
+  565  ls
+  566  echo $PYTHONPATH
+  567  cd /home/dloti/projects/spacebook-engine
+  568  export PYTHONPATH="/home/dloti/projects/spacebook/spacebook-engine:/home/dloti/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  569  echo $PYTHONPATH
+  570  export PYTHONPATH=
+  571  export PYTHONPATH="/home/dloti/projects/spacebook/spacebook-engine:/home/dloti/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  572  virtualenv venv
+  573  source ./venv/bin/activate
+  574  python application.py 
+  575  deactivate
+  576  ls
+  577  git status
+  578  cd space
+  579  cd projects/
+  580  cd spacebook
+  581  ls
+  582  echo $PYTHON
+  583  cd spacebook-goal-recognition/
+  584  ls
+  585  git pull
+  586  export PYTHONPATH="/home/dloti/projects/spacebook/spacebook-engine:/home/dloti/projects/spacebook/spacebook-goal-recognition/src:$PYTHONPATH"
+  587  cd ..
+  588  ls
+  589  cd spacebook-
+  590  cd spacebook-demo/
+  591  ls
+  592  virtualenv venv
+  593  source ./venv/bin/activate
+  594  quit
+  595  cd projects/
+  596  cd spacebook/
+  597  cd spacebook-goal-recognition/
+  598  cmake .
+  599  make
+  600  make spacebook_py
+  601  cd ..
+  602  cd spacebook-demo
+  603  venv
+  604  virtualenv venv
+  605  source ./venv/bin/activate
+  606  python application.py 
+  607  echo $PYTHON
+  608  echo $PYTHONPATH
+  609  vim 
+  610  vim /home/dloti/.bashrc 
+  611  bash
+  612  source ./venv/bin/activate
+  613  python application.py 
+  614  echo $PYTHONPATH 
+  615  ls /home/dloti/project/spacebook/spacebook-engine
+  616  vim /bin/bash
+  617  vim ~/.bash
+  618  vim /home/dloti/.bashrc 
+  619  cd projects/spacebook/
+  620  ls
+  621  cd spacebook-demo/
+  622  ls
+  623  source ./venv/bin/activate
+  624  python application.py 
+  625  exit
+  626  source ./venv/bin/activate
+  627  python application.py 
+  628  exit
+  629  echo $PYTHONPATH 
+  630  source ./venv/bin/activate
+  631  python application.py 
+  632  git status
+  633  python application.py 
+  634  cd ..
+  635  cd spacebook-engine/
+  636  git pull
+  637  cd ..
+  638  cd spacebook-demo/
+  639  python application.py 
+  640  vim ~/.bashrc
+  641  bash
+  642  quit
+  643  cd ..
+  644  cd spacebook-goal-recognition/
+  645  git status
+  646  git pull
+  647  cmake .
+  648  make
+  649  git pull
+  650  cmake .
+  651  make
+  652  cd ..
+  653  cd spacebook-engine/
+  654  git pull
+  655  ls
+  656  tty
+  657  cd ..
+  658  cd spacebook-demo/
+  659  git pull
+  660  source ./venv/bin/activate
+  661  python application.py 
+  662  echo $PYTHONPATH
+  663  git pull
+  664  cat ~/projects/spacebook/spacebook-engine/SpacebookEngine.py
+  665  python
+  666  cd ..
+  667  cd spacebook-goal-recognition/
+  668  make spacebook_py
+  669  cd ..
+  670  cd spacebook-demo
+  671  python application.py 
+  672  echo $PYTHONPATH
+  673  cd /home/dloti/projects/spacebook/spacebook-goal-recognition/src
+  674  ls
+  675  history | more
+  676  cd ..
+  677  cmake .
+  678  make
+  679  make spacebook_py
+  680  git pull
+  681  git status
+  682  cd ..
+  683  ls
+  684  cd spacebook-demo
+  685  ls
+  686  python application.py 
+  687  htop
+  688  sudo apt-get install htop
+  689  htop
+  690  git pull
+  691  python application.py
+  692  echo $PYTHONPATH
+  693  gedit ~/.bashrc
+  694  reset
+  695  echo $PYTHONPATH
+  696  reset
+  697  echo $PYTHONPATH
+  698  cd projects/
+  699  ls
+  700  cd spacebook
+  701  cd spacebook-demo/
+  702  ls
+  703  source ./venv/bin/activate
+  704  python application.py 
+  705  deactivate
+  706  ls
+  707  cd ..
+  708  ls
+  709  cd spacebook-goal-recognition/
+  710  ls
+  711  git status
+  712  git pull
+  713  ls
+  714  cd src
+  715  ls
+  716  grep -o 'Point' abstractmap_stock.txt |wc -l
+  717  grep -c 'Point' abstractmap_stock.txt 
+  718  grep -c "Point" abstractmap_stock.txt 
+  719  grep -c "Node" abstractmap_stock.txt 
+  720  git status
+  721  grep -l "getPOIList" *
+  722  cmake .
+  723  make
+  724  git pull
+  725  cmake .
+  726  make .
+  727  make all
+  728  cmake
+  729  cmake .
+  730  make
+  731  make spacebook_py
+  732  cd ..
+  733  git clone https://dloti@bitbucket.org/spacebook_upf/spacebook-goal-recognition.git
+  734  cd spacebook-goal-recognition/
+  735  ls
+  736  cmake .
+  737  make
+  738  make spacebook_py
+  739  git pull
+  740  ls
+  741  git checkout multithreaded_design_py 
+  742  git pull
+  743  cmake .
+  744  make 
+  745  cd ..
+  746  ls
+  747  cd spacebook-engine/
+  748  git pull
+  749  cd ..
+  750  ls
+  751  cd spacebook-demo/
+  752  git pull
+  753  cd ../spacebook-goal-recognition/
+  754  ls
+  755  cmake
+  756  cmake .
+  757  make spacebook_py
+  758  make
+  759  cd ..
+  760  cd spacebook-demo
+  761  ls
+  762  virtualenv venv
+  763  python application.py 
+  764  source ./venv/bin/activate
+  765  python application.py 
+  766  echo $PYTHONPATH
+  767  cd ~/projects/spacebook/spacebook-goal-recognition/python/
+  768  ls
+  769  deactivate
+  770  ls
+  771  cd ..
+  772  cmake .
+  773  make 
+  774  make depend
+  775  make
+  776  make clean
+  777  make spacebook_py
+  778  make all
+  779  cmake .
+  780  make all
+  781  make clean
+  782  make all
+  783  echo $SPACEBOOKLIBS
+  784  echo $PYTHON_LIBRARIES
+  785  cd CMakeFiles/
+  786  grep -l "SPACEBOOKLIBS" *
+  787  cd ..
+  788  grep -l "SPACEBOOKLIBS" *
+  789  cd spa
+  790  cd projects/
+  791  cd spacebook
+  792  cd spacebook-demo
+  793  ls
+  794  grep -l "getCandidateHypothesesFromPartition" *
+  795  cd ..
+  796  cd spacebook-eng
+  797  cd spacebook-engine/
+  798  grep -l "getCandidateHypothesesFromPartition" *
+  799  grep -l "getHypothesisSpacePartition" *
+  800  grep -l "computeInverse" *
+  801  pycharm
+  802  cd projects/spacebook/spacebook-goal-recognition/
+  803  git status
+  804  git push
+  805  git add src/SpacebookInterface.cpp
+  806  git add src/
+  807  git commit -m "getAllPOIs added for testing purposes"
+  808  git push
+  809  cd ..
+  810  cd spacebook-demo
+  811  git status
+  812  git commit -am "Display all POIs"
+  813  git push
+  814  cd ..
+  815  cd spacebook-engine/
+  816  git status 
+  817  git -am "performance issues fixed"
+  818  git comit -am "performance issues fixed"
+  819  git commit -am "performance issues fixed"
+  820  git push
+  821  ls
+  822  cd pro
+  823  cd projects/
+  824  ls
+  825  cd spacebook
+  826  ls
+  827  cd spacebook-demo
+  828  git pull
+  829  cd ..
+  830  cd spacebook-engine/
+  831  ls
+  832  git pull
+  833  cd ..
+  834  ls
+  835  cd spacebook-goal-recognition/
+  836  ls
+  837  git pull
+  838  cmake .
+  839  make
+  840  cd ..
+  841  ls
+  842  cd spacebook-demo
+  843  source ./venv/bin/activate
+  844  python application.py 
+  845  python test.py
+  846  cd ..
+  847  cd spacebook-engine
+  848  python test.py 
+  849  git pull
+  850  python imdb.py
+  851  sudo add-apt-repository ppa:nvbn-rm/ppa
+  852  sudo apt-get update
+  853  sudo apt-get install everpad
+  854  cd projects/
+  855  ls
+  856  cd Concept/
+  857  ls
+  858  cd Concepts/
+  859  ls
+  860  ./planner blocks
+  861  ./planner blocks domain.pddl
+  862  ./planner domain.pddl blocks
+  863  ./planner /blocks domain.pddl
+  864  ./planner /blocks/ domain.pddl
+  865  ./planner blocks/ domain.pddl
+  866  cd blocks/
+  867  ls
+  868  cd ..
+  869  ./planner blocks domain.pddl
+  870  history
+  871  history > hist.txt
