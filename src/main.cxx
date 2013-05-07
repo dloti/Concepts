@@ -205,7 +205,7 @@ void combine_concepts() {
 	UnaryOperator* uo;
 	BinaryOperator* bo;
 	update_subsets();
-	double max_subset_num = std::pow(2., instanceObjects.size())-1;
+	double max_subset_num = std::pow(2., instanceObjects.size()) - 1;
 	cout << "MAX_SUBSET_NUM:" << max_subset_num << endl;
 	while (objectSubsets.size() - 1 < max_subset_num) {
 		for (conceptIt = rootConcepts.begin(); conceptIt < rootConcepts.end(); ++conceptIt) {
@@ -255,14 +255,14 @@ void combine_concepts() {
 		}
 		unsigned previousSubsetsSize = objectSubsets.size();
 		update_subsets(candidates);
-		print_expressions("Candidates", &candidates);
+		//print_expressions("Candidates", &candidates);
 		cout << "SUBSETS:" << objectSubsets.size() - 1 << endl;
-		for (unsigned i = 0; i < objectSubsets.size(); i++) {
-			cout << "\t";
-			for (unsigned j = 0; j < objectSubsets[i].size(); j++)
-				cout << " " << instanceObjects[objectSubsets[i][j]]->signature();
-		}
-		cout << endl;
+//		for (unsigned i = 0; i < objectSubsets.size(); i++) {
+//			cout << "\t";
+//			for (unsigned j = 0; j < objectSubsets[i].size(); j++)
+//				cout << " " << instanceObjects[objectSubsets[i][j]]->signature();
+//		}
+//		cout << endl;
 		if (previousSubsetsSize == objectSubsets.size())
 			break;
 		for (conceptIt = candidates.begin(); conceptIt < candidates.end(); ++conceptIt) {
@@ -389,21 +389,14 @@ void get_primitive_concepts_relations(STRIPS_Problem& prob) {
 	}
 }
 
-bool ruleSortPredicate(Rule r1, Rule r2) {
-	if (r1.GetCorrect() > r2.GetCorrect())
-		return true;
-	if (r1.GetCoverage() < r2.GetCoverage())
-		return false;
-	return (r1.GetCurrentCoverage() > r2.GetCurrentCoverage());
-}
-
 void print_ruleset() {
-	sort(ruleSet.begin(), ruleSet.end(), ruleSortPredicate);
+	sort(ruleSet.begin(), ruleSet.end());
 	vector<Rule>::iterator ruleIterator;
 	cout << "**************Rules******************" << endl;
 	for (ruleIterator = ruleSet.begin(); ruleIterator != ruleSet.end(); ++ruleIterator) {
 		cout << "\t" << *ruleIterator << "; Examples: " << ruleIterator->GetExamples() << "; Coverage:"
-				<< ruleIterator->GetCoverage() << "; Hits:" << ruleIterator->GetCorrect() << std::endl;
+				<< ruleIterator->GetCoverage() << "; Hits:" << ruleIterator->GetCorrect() << "; Mised:"
+				<< ruleIterator->GetMised() << std::endl;
 	}
 	cout << "*************************************";
 }
@@ -555,7 +548,7 @@ void update_primitive_interpretations(STRIPS_Problem& prob, Node* n) {
 
 		current_predicate = prob.fluents()[tmp]->predicate();
 		cout << current_predicate;
-		cout << " : ";
+		cout << ":";
 
 		if (arity > 2)
 			continue;
@@ -565,7 +558,7 @@ void update_primitive_interpretations(STRIPS_Problem& prob, Node* n) {
 		pair<int, int>* p;
 		if (arity == 2 && objs_idx.size() == 2) {
 			cout << "(" << instanceObjects[objs_idx[0]]->signature() << "," << instanceObjects[objs_idx[1]]->signature()
-					<< ") | ";
+					<< ")|";
 
 			vector<pair<int, int> >* interpPRVec = primitiveRoles[current_predicate]->GetRoleInterpretation();
 			p = new pair<int, int>(objs_idx[0], objs_idx[1]);
@@ -579,7 +572,7 @@ void update_primitive_interpretations(STRIPS_Problem& prob, Node* n) {
 		}
 
 		for (unsigned j = 0; j < objs_idx.size(); j++) {
-			cout << instanceObjects[objs_idx[j]]->signature() << " ";
+			cout << instanceObjects[objs_idx[j]]->signature();
 			vector<int>* interpPCVec = primitiveConcepts[current_predicate]->GetInterpretation();
 
 			if (std::find((*interpPCVec).begin(), (*interpPCVec).end(), objs_idx[j]) == (*interpPCVec).end()) {
@@ -588,8 +581,14 @@ void update_primitive_interpretations(STRIPS_Problem& prob, Node* n) {
 		}
 		sort(primitiveConcepts[current_predicate]->GetInterpretation()->begin(),
 				primitiveConcepts[current_predicate]->GetInterpretation()->end());
-		cout << " | ";
+		cout << "|";
 	}
+}
+
+int resolve_action_index(string signature) {
+	if (signature.compare("STACK") == 0)
+		return 1;
+	return 0;
 }
 
 void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan, bool firstPlan = false) {
@@ -611,37 +610,32 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan, bool firs
 		aig_tk::Index_Vec objs_idx = a->pddl_objs_idx();
 		sort(objs_idx.begin(), objs_idx.end());
 		Rule* r;
-		vector<int> intersect;
+		int index = resolve_action_index(a->name());
 		for (unsigned g = 0; g < rootConcepts.size(); g++) {
 			r = new Rule(a);
 			vector<int>* interp = rootConcepts[g]->GetInterpretation();
 			if (interp->size() == 0)
 				continue;
 
-			set_intersection(interp->begin(), interp->end(), objs_idx.begin(), objs_idx.end(),
-					back_inserter(intersect));
-
-			if (intersect.size() > 0) {
-				intersect.clear();
-				if (!r->AddConcept(rootConcepts[g])){
+			if (find(interp->begin(), interp->end(), objs_idx[index]) != interp->end()) {
+				if (!r->AddConcept(rootConcepts[g])) {
 					cout << "!...!Error!...!";
 					return;
 				}
 			}
 
 			bool found = false;
-			for (unsigned i = 0; i < ruleSet.size(); i++){
+			for (unsigned i = 0; i < ruleSet.size(); i++) {
 				if (ruleSet[i] == *r) {
 					found = true;
 					break;
 				}
 			}
 
-			if (!found && r->GetConcepts().size() > 0){
+			if (!found && r->GetConcepts().size() > 0 && r->GetConcepts()[0]->GetInterpretation()->size() > 0) {
 				ruleSet.push_back(*r);
 				break;
-			}
-			else
+			} else
 				delete r;
 		}
 
@@ -650,16 +644,15 @@ void interpret_plan(STRIPS_Problem& prob, vector<aig_tk::Node*>& plan, bool firs
 			vector<Expression*> ruleConcepts = ruleSet[i].GetConcepts();
 			bool conceptCover = false;
 			bool ruleCorrect = false;
-			for (unsigned j = 0; j < ruleConcepts.size(); j++) {
-				vector<int>* interp = ruleConcepts[j]->GetInterpretation();
-				conceptCover = false;
-				ruleCorrect = false;
-				if (interp->size() > 0) {
-					conceptCover = true;
-					if ((int) (*interp)[0] == (int) objs_idx[j])
-						ruleCorrect = true;
-				}
+			vector<int>* interp = ruleConcepts[0]->GetInterpretation();
+			conceptCover = false;
+			ruleCorrect = false;
+			if (interp->size() > 0) {
+				conceptCover = true;
+				if ((unsigned) (*interp)[0] == objs_idx[index])
+					ruleCorrect = true;
 			}
+
 			ruleSet[i].IncExamples();
 			if (conceptCover)
 				ruleSet[i].IncCoverage();
@@ -982,28 +975,34 @@ void solve(STRIPS_Problem& prob) {
 	while (!(n->s()->entails(prob.goal())) && max > 0) {
 		update_primitive_interpretations(prob, n);
 		update_compound_interpretations();
-		std::sort(ruleSet.begin(), ruleSet.end(), ruleSortPredicate);
+		sort(ruleSet.begin(), ruleSet.end());
 		vector<Rule>::iterator it = ruleSet.begin();
 		bool applied = false;
 		while (!applied && it != ruleSet.end()) {
 			Rule r = *(it);
-
-			for (unsigned i = 0; i < prob.num_actions(); i++) {
-				aig_tk::Action* a = prob.actions()[i];
-				if (a->name() == r.GetAction()->name())
-					if (a->can_be_applied_on(*(n->s())) && n->successor(a) != n->parent()) {
-						n = n->successor(a);
-						cout << endl << "Rule:" << r << " Action:" << a->signature() << endl;
-						applied = true;
-						break;
+			vector<Expression*> concepts = r.GetConcepts();
+			if (r.GetCurrentCoverage() > 0) {
+				vector<int>* interp = concepts[0]->GetInterpretation();
+				for (unsigned i = 0; i < prob.num_actions(); i++) {
+					aig_tk::Action* a = prob.actions()[i];
+					int index = resolve_action_index(a->name());
+					Index_Vec objs_idx = a->pddl_objs_idx();
+					if (a->name().compare(r.GetAction()->name())==0 && (*interp)[0] == objs_idx[index]) {
+						if (a->can_be_applied_on(*(n->s())) && n->successor(a) != n->parent()) {
+							n = n->successor(a);
+							cout << endl << "\t" << r << ":" << a->signature() << endl;
+							applied = true;
+							break;
+						}
 					}
+				}
 			}
 			++it;
 		}
 		--max;
 	}
 	if (max != 0)
-		cout << endl << "Reached goal" << endl;
+		cout << endl << "Goal reached" << endl;
 }
 
 int main(int argc, char** argv) {
@@ -1069,7 +1068,6 @@ int main(int argc, char** argv) {
 	strips_prob = new STRIPS_Problem();
 	adl_compiler = FF_PDDL_To_STRIPS();
 	adl_compiler.get_problem_description(domain, instance_path, *strips_prob, true);
-	cout << "Compiled" << endl;
 	solve(*strips_prob);
 
 	return 0;
